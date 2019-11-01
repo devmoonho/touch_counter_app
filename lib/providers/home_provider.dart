@@ -9,7 +9,7 @@ class Counter with ChangeNotifier {
   }
 
   void decrement() {
-    value -= 1;
+    value > 0 ? value -= 1 : value = 0;
     notifyListeners();
   }
   void reset() {
