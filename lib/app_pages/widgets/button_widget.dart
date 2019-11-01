@@ -18,7 +18,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
       height: 100.0,
       width: 100.0,
       decoration: BoxDecoration(
-        color: _selectedIndex == index ? Theme.of(context).accentColor : Color(0xFFE7EBEE),
+      color: Colors.white,
         borderRadius: BorderRadius.circular(30.0),
         boxShadow: [
           BoxShadow(
@@ -28,10 +28,17 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           ),
         ],
       ),
-      child: Icon(
-        _icons[index],
-        size: 60.0,
-        color: _selectedIndex == index ? Theme.of(context).primaryColor : Color(0xFFB4C1C4),
+      child: Material(
+        borderRadius: BorderRadius.circular(30.0),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(30.0),
+          onTap: (){},
+          child: Icon(
+            _icons[index],
+            size: 60.0,
+            color: Theme.of(context).accentColor,
+          ),
+        ),
       ),
     );
   }
