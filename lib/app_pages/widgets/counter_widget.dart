@@ -7,16 +7,22 @@ class CounterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Provider.of<Counter>(context, listen: false).increment(),
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-//                    color: Colors.blue,
-        ),
-        child: Consumer<Counter>(
-          builder: (context, counter, child) => Text(
-            '${counter.value}',
-            style: TextStyle(
-              fontSize: 50,
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(50.0), bottomRight: Radius.circular(50.0)),
+        child: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Color(0xFFFFCC00),
+          ),
+          child: Consumer<Counter>(
+            builder: (context, counter, child) => Text(
+              '${counter.value}',
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Rubik',
+                fontSize: 150,
+              ),
             ),
           ),
         ),
