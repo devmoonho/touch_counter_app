@@ -19,7 +19,14 @@ class _ButtonWidgetState extends State<ButtonWidget> {
       width: 100.0,
       decoration: BoxDecoration(
         color: _selectedIndex == index ? Theme.of(context).accentColor : Color(0xFFE7EBEE),
-        borderRadius: BorderRadius.circular(100.0),
+        borderRadius: BorderRadius.circular(30.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(0.0, 5.0),
+            blurRadius: 10.0,
+          ),
+        ],
       ),
       child: Icon(
         _icons[index],
