@@ -12,10 +12,43 @@ class Home extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Column(
-          children: <Widget>[
-            Text('1000'),
-          ],
+        body: SafeArea(
+          child: Column(
+            children: <Widget>[
+              Flexible(
+                flex: 3,
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  child: Text(
+                    '1000',
+                    style: TextStyle(
+                      fontSize: 50,
+                    ),
+                  ),
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                  ),
+                  child: ListView(
+                    children: <Widget>[
+                      Text('1000000000'),
+                      Text('1000000000'),
+                      Text('1000000000'),
+                      Text('1000000000'),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
