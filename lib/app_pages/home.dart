@@ -10,12 +10,12 @@ class Home extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Opacity(
-        opacity: 0.0,
-        child: Scaffold(
-          body: Column(
-
-          ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Column(
+          children: <Widget>[
+            Text('1000'),
+          ],
         ),
       ),
     );
