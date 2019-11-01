@@ -8,34 +8,34 @@ import 'package:touch_counter_app/providers/home_provider.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/TouchCounter_bg.png"),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Flexible(
-                flex: 3,
-                child: ChangeNotifierProvider(
-                  builder: (context) => Counter(),
-                  child: Stack(children: <Widget>[
-                    CounterWidget(),
-                    ButtonWidget(),
-                  ],),
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Flexible(
+                  flex: 1,
+                  child: ChangeNotifierProvider(
+                    builder: (context) => Counter(),
+                    child: Stack(
+                      children: <Widget>[
+                        CounterWidget(),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              Flexible(
-                flex: 1,
-                child: ListWidget(),
-              )
-            ],
-          ),
+                Flexible(
+                  flex: 1,
+                  child: ListWidget(),
+                )
+              ],
+            ),
+            Container(
+             alignment: Alignment.center,
+              child: ButtonWidget(),
+            ),
+          ],
         ),
       ),
     );
