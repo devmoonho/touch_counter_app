@@ -10,18 +10,28 @@ class CounterWidget extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(50.0), bottomRight: Radius.circular(50.0)),
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: Color(0xFFFFCC00),
-          ),
-          child: Consumer<Counter>(
-            builder: (context, counter, child) => Text(
-              '${counter.value}',
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Rubik',
-                fontSize: 150,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 5.0),
+          child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Color(0xFFFFCC00),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0.0, 5.0),
+                  blurRadius: 10.0,
+                ),
+              ],
+            ),
+            child: Consumer<Counter>(
+              builder: (context, counter, child) => Text(
+                '${counter.value}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Rubik',
+                  fontSize: 150,
+                ),
               ),
             ),
           ),
