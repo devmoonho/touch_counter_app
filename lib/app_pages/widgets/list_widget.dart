@@ -9,7 +9,9 @@ class ListWidget extends StatelessWidget {
       padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
       child: Container(
         alignment: Alignment.center,
-        decoration: BoxDecoration(),
+        decoration: BoxDecoration(
+          color: Color(0xFFF6F6F6),
+        ),
         child: ListView.builder(
           itemCount: counterTimers.length,
           itemBuilder: (BuildContext context, int index) {

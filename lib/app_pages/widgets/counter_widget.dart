@@ -15,7 +15,7 @@ class CounterWidget extends StatelessWidget {
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: Color(0xFFFFCC00),
+              color: Theme.of(context).primaryColor,
               boxShadow: [
                 BoxShadow(
                   color: Colors.black12,
