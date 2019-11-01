@@ -7,4 +7,9 @@ class Counter with ChangeNotifier {
     value += 1;
     notifyListeners();
   }
+
+  void decrement() {
+    value -= 1;
+    notifyListeners();
+  }
 }
