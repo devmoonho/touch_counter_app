@@ -15,15 +15,15 @@ class _ButtonWidgetState extends State<ButtonWidget> {
 
   Widget _buildIcon(int index) {
     return Container(
-      height: 60.0,
-      width: 60.0,
+      height: 100.0,
+      width: 100.0,
       decoration: BoxDecoration(
         color: _selectedIndex == index ? Theme.of(context).accentColor : Color(0xFFE7EBEE),
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(100.0),
       ),
       child: Icon(
         _icons[index],
-        size: 25.0,
+        size: 60.0,
         color: _selectedIndex == index ? Theme.of(context).primaryColor : Color(0xFFB4C1C4),
       ),
     );
