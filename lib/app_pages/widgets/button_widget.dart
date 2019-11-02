@@ -32,6 +32,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
+          borderRadius: BorderRadius.circular(30.0),
           onTap: () {
             if (index == 0) {
               Provider.of<Counter>(context, listen: false).decrement();
