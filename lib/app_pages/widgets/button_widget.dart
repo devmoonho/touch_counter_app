@@ -9,7 +9,6 @@ class ButtonWidget extends StatefulWidget {
 }
 
 class _ButtonWidgetState extends State<ButtonWidget> {
-  int _selectedIndex = 0;
   List<IconData> _icons = [
     FontAwesomeIcons.minus,
     FontAwesomeIcons.trashAlt,
@@ -31,9 +30,8 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         ],
       ),
       child: Material(
-        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(30.0),
           onTap: () {
             if (index == 0) {
               Provider.of<Counter>(context, listen: false).decrement();
