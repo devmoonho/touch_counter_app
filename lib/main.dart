@@ -11,7 +11,7 @@ class TouchCounterApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Touch Counter App',
       theme: ThemeData(
-        primaryColor: Color(0xFFFEBE00),
+        primaryColor: Color(0xFFFFB339),
         accentColor: Color(0xFFFFCC66),
       ),
       home: Home(),
