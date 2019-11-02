@@ -12,7 +12,12 @@ class Counter with ChangeNotifier {
   }
 
   void decrement() {
-    value > 0 ? value -= 1 : value = 0;
+    if (value > 0) {
+      value -= 1;
+      touchCounters.removeAt(value);
+    } else {
+      value = 0;
+    }
     notifyListeners();
   }
 
@@ -28,7 +33,7 @@ class Counter with ChangeNotifier {
 
   Duration getDiff(value) {
     if (touchCounters.length == 0) {
-      return Duration(seconds:0);
+      return Duration(seconds: 0);
     } else {
       return DateTime.now().difference(touchCounters[value - 1].datetime);
     }
