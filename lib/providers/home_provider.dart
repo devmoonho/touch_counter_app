@@ -18,6 +18,7 @@ class Counter with ChangeNotifier {
 
   void reset() {
     value = 0;
+    touchCounters = [];
     notifyListeners();
   }
 
