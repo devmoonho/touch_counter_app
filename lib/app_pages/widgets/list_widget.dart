@@ -17,31 +17,65 @@ class ListWidget extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             TouchCounter tCounter = counterTimers[index];
             return Container(
+              margin: EdgeInsets.fromLTRB(2.0, 5.0, 2.0, 5.0),
+              height: 100.0,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    offset: Offset(1.0, 1.0),
+                    blurRadius: 6.0,
+                  ),
+                ],
+              ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    tCounter.counter.toString(),
-                    style: TextStyle(fontSize: 30.0),
-                  ),
-                  SizedBox(
-                    width: 10,
-                    height: 4,
-                  ),
-                  Text(
-                    formatDate(
-                      tCounter.datetime,
-                      [HH, ':', nn, ':', ss],
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      tCounter.counter.toString(),
+                      style: TextStyle(fontSize: 30.0),
                     ),
-                    style: TextStyle(fontSize: 30.0),
+                  ),
+                  SizedBox(
+                    width: 10,
+                    height: 4,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        formatDate(
+                          tCounter.datetime,
+                          [HH, ':', nn, ':', ss],
+                        ),
+                        style: TextStyle(fontSize: 30.0),
+                      ),
+                      SizedBox(height: 5.0,),
+                      Text(
+                        formatDate(
+                          tCounter.datetime,
+                          [yyyy, '-', mm, '-', dd],
+                        ),
+                        style: TextStyle(fontSize: 20.0,color: Colors.grey),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 4,
                     width: 10,
                   ),
-                  Text(
-                    tCounter.diff.toString(),
-                    style: TextStyle(fontSize: 30.0),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      tCounter.diff.toString(),
+                      style: TextStyle(fontSize: 20.0),
+                    ),
                   ),
                 ],
               ),
