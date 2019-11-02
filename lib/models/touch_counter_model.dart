@@ -1,7 +1,7 @@
 class TouchCounter {
   int counter;
   DateTime datetime;
-  DateTime diff;
+  Duration diff;
 
   TouchCounter({this.counter, this.datetime, this.diff});
 }
