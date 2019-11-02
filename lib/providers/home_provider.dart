@@ -42,11 +42,14 @@ class Counter with ChangeNotifier {
   }
 
   void listAnimation() {
-    print(scrollController.position.maxScrollExtent);
-    scrollController.animateTo(
-      scrollController.position.maxScrollExtent + 110,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 300),
-    );
+    if (scrollController.position.maxScrollExtent > 0.0) {
+      print(scrollController.position.maxScrollExtent);
+
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent + 110,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    }
   }
 }
