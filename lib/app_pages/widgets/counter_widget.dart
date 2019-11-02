@@ -22,21 +22,20 @@ class CounterWidget extends StatelessWidget {
               ),
             ],
           ),
-          child: SizedBox.expand(
-            child: Material(
-              color: Theme.of(context).primaryColor,
-              child: InkWell(
-                onTap: () => Provider.of<Counter>(context, listen: false).increment(),
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Consumer<Counter>(
-                    builder: (context, counter, child) => Text(
-                      '${counter.value}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Rubik',
-                        fontSize: 150,
-                      ),
+          child: Material(
+            color: Theme.of(context).primaryColor,
+            child: InkWell(
+              onTap: () => Provider.of<Counter>(context, listen: false).increment(),
+              child: Container(
+                constraints: BoxConstraints.expand(),
+                alignment: Alignment.center,
+                child: Consumer<Counter>(
+                  builder: (context, counter, child) => Text(
+                    '${counter.value}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Rubik',
+                      fontSize: 150,
                     ),
                   ),
                 ),
