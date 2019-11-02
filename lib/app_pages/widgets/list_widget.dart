@@ -16,7 +16,9 @@ class ListWidget extends StatelessWidget {
         ),
         child: Consumer<Counter>(
           builder: (context, counter, child) => ListView.builder(
+            controller: counter.scrollController,
             reverse: true,
+            shrinkWrap: true,
             itemCount: counter.touchCounters.length,
             itemBuilder: (BuildContext context, int index) {
               TouchCounter tCounter = counter.touchCounters[index];
@@ -60,13 +62,15 @@ class ListWidget extends StatelessWidget {
                           ),
                           style: TextStyle(fontSize: 30.0),
                         ),
-                        SizedBox(height: 5.0,),
+                        SizedBox(
+                          height: 5.0,
+                        ),
                         Text(
                           formatDate(
                             tCounter.datetime,
                             [yyyy, '-', mm, '-', dd],
                           ),
-                          style: TextStyle(fontSize: 20.0,color: Colors.grey),
+                          style: TextStyle(fontSize: 20.0, color: Colors.grey),
                         ),
                       ],
                     ),

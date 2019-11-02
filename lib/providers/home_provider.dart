@@ -4,6 +4,7 @@ import 'package:touch_counter_app/models/touch_counter_model.dart';
 class Counter with ChangeNotifier {
   int value = 0;
   List<TouchCounter> touchCounters = [];
+  ScrollController scrollController = new ScrollController();
 
   void increment() {
     setCounter(value);
@@ -29,6 +30,7 @@ class Counter with ChangeNotifier {
 
   void setCounter(int value) {
     touchCounters.add(TouchCounter(counter: value, datetime: DateTime.now(), diff: getDiff(value)));
+    listAnimation();
   }
 
   Duration getDiff(value) {
@@ -37,5 +39,14 @@ class Counter with ChangeNotifier {
     } else {
       return DateTime.now().difference(touchCounters[value - 1].datetime);
     }
+  }
+
+  void listAnimation() {
+    print(scrollController.position.maxScrollExtent);
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent + 110,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
   }
 }
