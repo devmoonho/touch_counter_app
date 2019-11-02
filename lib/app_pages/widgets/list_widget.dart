@@ -74,12 +74,18 @@ class ListWidget extends StatelessWidget {
                       height: 4,
                       width: 10,
                     ),
-                    Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        tCounter.diff.inSeconds.toString(),
-                        style: TextStyle(fontSize: 20.0),
-                      ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          tCounter.diff.inSeconds.toString(),
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                        Text(
+                          'Seconds',
+                          style: TextStyle(color: Colors.grey),
+                        )
+                      ],
                     ),
                   ],
                 ),
