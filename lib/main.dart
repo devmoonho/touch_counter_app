@@ -7,9 +7,11 @@ import 'app_pages/home.dart';
 void main() => runApp(TouchCounterApp());
 
 class TouchCounterApp extends StatelessWidget {
+  AdmobCounter ac = new AdmobCounter();
+
   @override
   Widget build(BuildContext context) {
-    FirebaseAdMob.instance.initialize(appId: AdmobCounter.appId);
+    FirebaseAdMob.instance.initialize(appId: ac.appId);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Touch Counter App',
