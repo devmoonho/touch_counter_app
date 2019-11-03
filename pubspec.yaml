@@ -36,8 +36,8 @@ dev_dependencies:
     sdk: flutter
 
 flutter_icons:
-  android: "launcher_icon"
-  ios: "launcher_icon"
+  android: true
+  ios: true
   image_path: "assets/icons/TouchCounter.png"
 
 
