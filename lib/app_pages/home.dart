@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
     super.initState();
     admobCounter.admobCounterInit();
     admobCounter.admobBannerShow();
- }
+  }
 
   @override
   void dispose() {
@@ -32,32 +32,37 @@ class _HomeState extends State<Home> {
     return ChangeNotifierProvider(
       builder: (context) => Counter(),
       child: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Flexible(
-                  flex: 1,
-                  child: Stack(
-                    children: <Widget>[
-                      CounterWidget(),
-                    ],
+        body: Consumer<Counter>(
+          builder: (context, counter, child) => Stack(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Flexible(
+                    flex: 100,
+                    child: Stack(
+                      children: <Widget>[
+                        CounterWidget(),
+                      ],
+                    ),
                   ),
-                ),
-                Flexible(
-                  flex: 1,
-                  child: ListWidget(),
-                )
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.0),
-              child: Container(
-                alignment: Alignment.center,
-                child: ButtonWidget(),
+                  Flexible(
+                    flex: counter.counterFill.flex,
+                    child: Offstage(
+                      offstage: counter.counterFill.offStage,
+                      child: ListWidget(),
+                    ),
+                  )
+                ],
               ),
-            ),
-          ],
+              Padding(
+                padding: counter.counterFill.padding,
+                child: Container(
+                  alignment: counter.counterFill.alignment,
+                  child: ButtonWidget(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
