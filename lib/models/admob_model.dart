@@ -6,6 +6,7 @@ class AdmobCounter {
   static const String adUnitId_android = "ca-app-pub-8126362785815437/6998433679";
   static const String appId_Ios = "ca-app-pub-8126362785815437~8091328965";
   static const String adUnitId_Ios = "ca-app-pub-8126362785815437/7133809820";
+  static const List<String> adTestDevices = ['c436c35d91946bdb614e712ae37a306e',];
 
   String appId;
   String adUnitId;
@@ -27,7 +28,7 @@ class AdmobCounter {
       keywords: <String>['Utils', 'useful app'],
       contentUrl: 'https://flutter.io',
       childDirected: false,
-      testDevices: <String>[], // Android emulators are considered test devices
+      testDevices: adTestDevices,
     );
 
     myBanner = BannerAd(
