@@ -14,7 +14,9 @@ class CounterWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(bottom: 5.0),
         child: Container(
-          alignment: Alignment.center,
+          alignment: MediaQuery.of(context).orientation == Orientation.portrait
+              ? Alignment.center
+              : Alignment.topCenter,
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
             boxShadow: [
@@ -48,8 +50,10 @@ class CounterWidget extends StatelessWidget {
               child: InkWell(
                 onTap: () => Provider.of<Counter>(context, listen: false).increment(),
                 child: Container(
+                  alignment: MediaQuery.of(context).orientation == Orientation.portrait
+                      ? Alignment.center
+                      : Alignment.topCenter,
                   constraints: BoxConstraints.expand(),
-                  alignment: Alignment.center,
                   child: Consumer<Counter>(
                     builder: (context, counter, child) => Text(
                       '${counter.value}',

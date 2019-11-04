@@ -36,27 +36,31 @@ class _HomeState extends State<Home> {
           builder: (context, counter, child) => Stack(
             children: <Widget>[
               Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Flexible(
-                    flex: 100,
-                    child: Stack(
-                      children: <Widget>[
-                        CounterWidget(),
-                      ],
-                    ),
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    alignment: Alignment.topCenter,
+                    height: counter.isCounterFill
+                        ? MediaQuery.of(context).size.height
+                        : MediaQuery.of(context).size.height / 2,
+                    child: CounterWidget(),
                   ),
-                  Flexible(
-                    flex: counter.counterFill.flex,
-                    child: Offstage(
-                      offstage: counter.counterFill.offStage,
-                      child: ListWidget(),
-                    ),
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    alignment: Alignment.bottomCenter,
+                    height: counter.isCounterFill
+                        ? 0.0
+                        : MediaQuery.of(context).size.height / 2,
+                    child: ListWidget(),
                   )
                 ],
               ),
               Padding(
                 padding: counter.counterFill.padding,
-                child: Container(
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 300),
                   alignment: counter.counterFill.alignment,
                   child: ButtonWidget(),
                 ),

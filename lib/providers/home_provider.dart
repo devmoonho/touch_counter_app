@@ -8,7 +8,6 @@ class CounterFill {
   AlignmentGeometry alignment;
 
   CounterFill() {
-    this.flex = 100;
     this.offStage = false;
     this.padding = EdgeInsets.only(top: 10.0);
     this.alignment = Alignment.center;
@@ -28,8 +27,9 @@ class Counter with ChangeNotifier {
   }
 
   void gestureUp() {
+    if (isCounterFill == false) return;
+
     isCounterFill = false;
-    counterFill.flex = 100;
     counterFill.offStage = false;
     counterFill.padding = EdgeInsets.only(top: 10.0);
     counterFill.alignment = Alignment.center;
@@ -39,8 +39,9 @@ class Counter with ChangeNotifier {
   }
 
   void gestureDown() {
+    if (isCounterFill == true) return;
+
     isCounterFill = true;
-    counterFill.flex = 0;
     counterFill.offStage = true;
     counterFill.padding = EdgeInsets.only(bottom: 100.0);
     counterFill.alignment = Alignment.bottomCenter;
