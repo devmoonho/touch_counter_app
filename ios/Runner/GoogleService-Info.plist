@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>296080865845-r68qqm5397rn74qhjuscs706d46ag30j.apps.googleusercontent.com</string>
+	<string>296080865845-lgs9e6u57td1d7vjdtdnnbge1f43kbd5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.296080865845-r68qqm5397rn74qhjuscs706d46ag30j</string>
+	<string>com.googleusercontent.apps.296080865845-lgs9e6u57td1d7vjdtdnnbge1f43kbd5</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAgzFBhndaH1AjfvSWOIGQjj6qfI5L-9mc</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.moonho.dev.touchCounterApp</string>
+	<string>com.moonho.dev.TCApp</string>
 	<key>PROJECT_ID</key>
 	<string>touchcounter-4d0ce</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:296080865845:ios:09715803d57436d55dcf7c</string>
+	<string>1:296080865845:ios:d2fd425a7f141d625dcf7c</string>
 	<key>DATABASE_URL</key>
 	<string>https://touchcounter-4d0ce.firebaseio.com</string>
 </dict>
