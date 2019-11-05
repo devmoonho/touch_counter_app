@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "296080865845",
+    "firebase_url": "https://touchcounter-4d0ce.firebaseio.com",
+    "project_id": "touchcounter-4d0ce",
+    "storage_bucket": "touchcounter-4d0ce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296080865845:android:7be21a0adeb328285dcf7c",
+        "android_client_info": {
+          "package_name": "com.moonho.dev.touch_counter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "296080865845-bd1k1bobka9msafcljh5el1en8oajue9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCS3LANG23_BjfKwRNGerBawwJmfuj7iRs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "296080865845-bd1k1bobka9msafcljh5el1en8oajue9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "296080865845-r68qqm5397rn74qhjuscs706d46ag30j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.moonho.dev.touchCounterApp"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-8126362785815437~5741192322"
+    }
+  ],
+  "configuration_version": "1"
+}
