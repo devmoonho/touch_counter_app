@@ -14,7 +14,7 @@ class TouchCounterApp extends StatelessWidget {
     FirebaseAdMob.instance.initialize(appId: ac.appId);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: '터치 카운터',
+      title: 'Touch Counter',
       theme: ThemeData(
         primaryColor: Color(0xFFFFB339),
         accentColor: Color(0xFFFFCC66),
