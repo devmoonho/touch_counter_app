@@ -3,9 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:touch_counter_app/providers/home_provider.dart';
 
 class CounterWidget extends StatelessWidget {
-  double startYPos = 0.0;
-  double endYPos = 0.0;
-
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -29,21 +26,18 @@ class CounterWidget extends StatelessWidget {
           ),
           child: GestureDetector(
             onHorizontalDragStart: (DragStartDetails details) {
-              print('Start ${details.globalPosition}');
-              startYPos = details.globalPosition.dy;
+              print(details.globalPosition);
+              Provider.of<Counter>(context, listen: false).setStartYPos(details.globalPosition.dy);
             },
             onHorizontalDragUpdate: (DragUpdateDetails details) {
-              endYPos = details.globalPosition.dy;
-              Provider.of<Counter>(context, listen: false).gestureMove(startYPos, endYPos);
+              Provider.of<Counter>(context, listen: false).gestureMove(details.globalPosition.dy);
             },
             onHorizontalDragEnd: (DragEndDetails details) {
-              print('End ${details.primaryVelocity}');
-              if (details.primaryVelocity != 0.0) {
-                if (startYPos < endYPos)
-                  Provider.of<Counter>(context, listen: false).gestureDown();
-                else
-                  Provider.of<Counter>(context, listen: false).gestureUp();
-              }
+              if (Provider.of<Counter>(context, listen: false).StartYPos <
+                  Provider.of<Counter>(context, listen: false).EndYPos)
+                Provider.of<Counter>(context, listen: false).gestureDown();
+              else
+                Provider.of<Counter>(context, listen: false).gestureUp();
             },
             child: Material(
               color: Theme.of(context).primaryColor,

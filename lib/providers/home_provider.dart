@@ -3,14 +3,19 @@ import 'package:touch_counter_app/models/touch_counter_model.dart';
 
 class CounterFill {
   int flex;
-  bool offStage;
+  double diffPos;
   EdgeInsetsGeometry padding;
   AlignmentGeometry alignment;
 
+  double startYPos;
+  double endYPos;
+
   CounterFill() {
-    this.offStage = false;
     this.padding = EdgeInsets.only(top: 10.0);
     this.alignment = Alignment.center;
+    this.diffPos = 0.0;
+    this.startYPos = 0.0;
+    this.endYPos = 0.0;
   }
 }
 
@@ -22,31 +27,47 @@ class Counter with ChangeNotifier {
   CounterFill counterFill = new CounterFill();
   bool isCounterFill = false;
 
-  void gestureMove(double start, double end) {
-    print('start : $start / end : $end / upDown : ${end - start}');
+  double get StartYPos {
+    return counterFill.startYPos;
+  }
+
+  double get EndYPos {
+    return counterFill.endYPos;
+  }
+
+  void setStartYPos(double startYPos) {
+    counterFill.startYPos = startYPos;
+  }
+
+  void gestureMove(double end) {
+    counterFill.endYPos = end;
+    counterFill.diffPos = (counterFill.endYPos - counterFill.startYPos) / 2;
+    counterFill.diffPos = (counterFill.endYPos - counterFill.startYPos) / 2;
+    print('isCounterFill : $isCounterFill / start : ${counterFill
+        .startYPos} / end : $end / upDown : ${counterFill.diffPos}');
+    if ((isCounterFill && counterFill.diffPos > 0) || (!isCounterFill && counterFill.diffPos < 0))
+      counterFill.diffPos = 0;
+
+   notifyListeners();
   }
 
   void gestureUp() {
-    if (isCounterFill == false) return;
-
-    isCounterFill = false;
-    counterFill.offStage = false;
-    counterFill.padding = EdgeInsets.only(top: 10.0);
-    counterFill.alignment = Alignment.center;
-
-    print('isCounterFill $isCounterFill');
+    if (counterFill.diffPos.abs() > 30 && isCounterFill && counterFill.diffPos < 0) {
+      isCounterFill = false;
+      counterFill.padding = EdgeInsets.only(top: 10.0);
+      counterFill.alignment = Alignment.center;
+    }
+    counterFill.diffPos = 0.0;
     notifyListeners();
   }
 
   void gestureDown() {
-    if (isCounterFill == true) return;
-
-    isCounterFill = true;
-    counterFill.offStage = true;
-    counterFill.padding = EdgeInsets.only(bottom: 100.0);
-    counterFill.alignment = Alignment.bottomCenter;
-
-    print('isCounterFill $isCounterFill');
+    if (counterFill.diffPos.abs() > 30 && !isCounterFill && counterFill.diffPos > 0) {
+      isCounterFill = true;
+      counterFill.padding = EdgeInsets.only(bottom: 100.0);
+      counterFill.alignment = Alignment.bottomCenter;
+    }
+    counterFill.diffPos = 0.0;
     notifyListeners();
   }
 

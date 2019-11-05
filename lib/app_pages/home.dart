@@ -43,16 +43,16 @@ class _HomeState extends State<Home> {
                     duration: Duration(milliseconds: 300),
                     alignment: Alignment.topCenter,
                     height: counter.isCounterFill
-                        ? MediaQuery.of(context).size.height
-                        : MediaQuery.of(context).size.height / 2,
+                        ? MediaQuery.of(context).size.height + counter.counterFill.diffPos
+                        : MediaQuery.of(context).size.height / 2 + counter.counterFill.diffPos,
                     child: CounterWidget(),
                   ),
                   AnimatedContainer(
                     duration: Duration(milliseconds: 300),
                     alignment: Alignment.bottomCenter,
                     height: counter.isCounterFill
-                        ? 0.0
-                        : MediaQuery.of(context).size.height / 2,
+                        ? 0.0 - counter.counterFill.diffPos
+                        : MediaQuery.of(context).size.height / 2 - counter.counterFill.diffPos,
                     child: ListWidget(),
                   )
                 ],
