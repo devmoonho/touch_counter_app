@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:touch_counter_app/providers/home_provider.dart';
+import 'package:vibration/vibration.dart';
 
 class CounterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius:
-          BorderRadius.only(bottomLeft: Radius.circular(50.0), bottomRight: Radius.circular(50.0)),
+      borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(50.0),
+          bottomRight: Radius.circular(50.0)),
       child: Padding(
         padding: EdgeInsets.only(bottom: 5.0),
         child: Container(
@@ -27,10 +29,12 @@ class CounterWidget extends StatelessWidget {
           child: GestureDetector(
             onHorizontalDragStart: (DragStartDetails details) {
               print(details.globalPosition);
-              Provider.of<Counter>(context, listen: false).setStartYPos(details.globalPosition.dy);
+              Provider.of<Counter>(context, listen: false)
+                  .setStartYPos(details.globalPosition.dy);
             },
             onHorizontalDragUpdate: (DragUpdateDetails details) {
-              Provider.of<Counter>(context, listen: false).gestureMove(details.globalPosition.dy);
+              Provider.of<Counter>(context, listen: false)
+                  .gestureMove(details.globalPosition.dy);
             },
             onHorizontalDragEnd: (DragEndDetails details) {
               if (Provider.of<Counter>(context, listen: false).StartYPos <
@@ -42,11 +46,17 @@ class CounterWidget extends StatelessWidget {
             child: Material(
               color: Theme.of(context).primaryColor,
               child: InkWell(
-                onTap: () => Provider.of<Counter>(context, listen: false).increment(),
+                onTap: () {
+                  Provider.of<Counter>(context, listen: false).increment();
+                  if (Vibration.hasVibrator() != null) {
+                    Vibration.vibrate();
+                  }
+                },
                 child: Container(
-                  alignment: MediaQuery.of(context).orientation == Orientation.portrait
-                      ? Alignment.center
-                      : Alignment.topCenter,
+                  alignment:
+                      MediaQuery.of(context).orientation == Orientation.portrait
+                          ? Alignment.center
+                          : Alignment.topCenter,
                   constraints: BoxConstraints.expand(),
                   child: Consumer<Counter>(
                     builder: (context, counter, child) => Text(
