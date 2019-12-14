@@ -1,5 +1,6 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:touch_counter_app/models/touch_counter_model.dart';
 import 'package:touch_counter_app/providers/home_provider.dart';
@@ -7,6 +8,7 @@ import 'package:touch_counter_app/providers/home_provider.dart';
 class ListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final f = new NumberFormat("0.0#");
     return Padding(
       padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
       child: Container(
@@ -53,7 +55,7 @@ class ListWidget extends StatelessWidget {
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
                           formatDate(
@@ -82,7 +84,7 @@ class ListWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          tCounter.diff.inSeconds.toString(),
+                          '${f.format(tCounter.diff.inMilliseconds / 1000)}',
                           style: TextStyle(fontSize: 20.0),
                         ),
                         Text(

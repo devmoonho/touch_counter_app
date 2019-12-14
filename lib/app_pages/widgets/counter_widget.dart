@@ -1,11 +1,41 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:touch_counter_app/providers/home_provider.dart';
 import 'package:vibration/vibration.dart';
 
-class CounterWidget extends StatelessWidget {
+class CounterWidget extends StatefulWidget {
+  @override
+  _CounterWidgetState createState() => _CounterWidgetState();
+}
+
+class _CounterWidgetState extends State<CounterWidget>
+    with SingleTickerProviderStateMixin {
+  Animation _animation;
+  AnimationController _animationController;
+  Timer timer;
+
+  @override
+  void initState() {
+    _animationController =
+        AnimationController(duration: Duration(milliseconds: 500), vsync: this);
+    _animation =
+        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+    timer = Timer(Duration(milliseconds: 500), _animationController.forward);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final counterProvider = Provider.of<Counter>(context, listen: true);
     return ClipRRect(
       borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(50.0),
@@ -28,29 +58,28 @@ class CounterWidget extends StatelessWidget {
           ),
           child: GestureDetector(
             onHorizontalDragStart: (DragStartDetails details) {
-              print(details.globalPosition);
-              Provider.of<Counter>(context, listen: false)
-                  .setStartYPos(details.globalPosition.dy);
+              counterProvider.setStartYPos(details.globalPosition.dy);
             },
             onHorizontalDragUpdate: (DragUpdateDetails details) {
-              Provider.of<Counter>(context, listen: false)
-                  .gestureMove(details.globalPosition.dy);
+              counterProvider.gestureMove(details.globalPosition.dy);
             },
             onHorizontalDragEnd: (DragEndDetails details) {
-              if (Provider.of<Counter>(context, listen: false).StartYPos <
-                  Provider.of<Counter>(context, listen: false).EndYPos)
-                Provider.of<Counter>(context, listen: false).gestureDown();
+              if (counterProvider.StartYPos < counterProvider.EndYPos)
+                counterProvider.gestureDown();
               else
-                Provider.of<Counter>(context, listen: false).gestureUp();
+                counterProvider.gestureUp();
             },
             child: Material(
               color: Theme.of(context).primaryColor,
               child: InkWell(
                 onTap: () {
-                  Provider.of<Counter>(context, listen: false).increment();
-                  if (Vibration.hasVibrator() != null) {
+                  counterProvider.increment();
+                  if (counterProvider.vibration) {
                     Vibration.vibrate();
                   }
+                  setState(() {
+                    counterProvider.doAnimation();
+                  });
                 },
                 child: Container(
                   alignment:
@@ -58,9 +87,9 @@ class CounterWidget extends StatelessWidget {
                           ? Alignment.center
                           : Alignment.topCenter,
                   constraints: BoxConstraints.expand(),
-                  child: Consumer<Counter>(
-                    builder: (context, counter, child) => Text(
-                      '${counter.value}',
+                  child: TextAnimation(
+                    child: Text(
+                      '${counterProvider.value}',
                       style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Rubik',
@@ -74,6 +103,62 @@ class CounterWidget extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class TextAnimation extends StatefulWidget {
+  final Widget child;
+
+  TextAnimation({this.child});
+
+  @override
+  _TextAnimationState createState() => _TextAnimationState();
+}
+
+class _TextAnimationState extends State<TextAnimation>
+    with SingleTickerProviderStateMixin {
+  Animation _animation;
+  AnimationController _animationController;
+  Timer timer;
+
+  @override
+  void initState() {
+    _animationController =
+        AnimationController(duration: Duration(milliseconds: 100), vsync: this);
+    _animation =
+        Tween<double>(begin: 1.0, end: 1.2).animate(_animationController);
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _animationController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        _animationController.stop(canceled: false);
+      }
+    });
+    _animationController.forward();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final counterProvider = Provider.of<Counter>(context, listen: true);
+    counterProvider.setController(_animationController);
+    return AnimatedBuilder(
+      animation: _animation,
+      child: widget.child,
+      builder: (BuildContext context, Widget child) {
+        return Transform.scale(
+          scale: _animation.value,
+          child: child,
+        );
+      },
     );
   }
 }
