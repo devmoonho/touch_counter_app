@@ -1,25 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:touch_counter_app/models/touch_counter_model.dart';
 
-class CounterFill {
-  int flex;
-  double diffPos;
-  EdgeInsetsGeometry padding;
-  AlignmentGeometry alignment;
-
-  double startYPos;
-  double endYPos;
-
-  CounterFill() {
-    this.padding = EdgeInsets.only(top: 10.0);
-    this.alignment = Alignment.center;
-    this.diffPos = 0.0;
-    this.startYPos = 0.0;
-    this.endYPos = 0.0;
-  }
-}
-
-class Counter with ChangeNotifier {
+class CounterProvider with ChangeNotifier {
   int value = 0;
   List<TouchCounter> touchCounters = [];
   ScrollController scrollController = new ScrollController();
@@ -27,6 +9,8 @@ class Counter with ChangeNotifier {
   CounterFill counterFill = new CounterFill();
   bool isCounterFill = false;
   bool vibration = false;
+
+  String diffType = 'seconds';
 
   AnimationController _animationController;
 
@@ -42,6 +26,7 @@ class Counter with ChangeNotifier {
 
   void setStartYPos(double startYPos) {
     counterFill.startYPos = startYPos;
+    refresh();
   }
 
   void gestureMove(double end) {
@@ -53,7 +38,7 @@ class Counter with ChangeNotifier {
     if ((isCounterFill && counterFill.diffPos > 0) ||
         (!isCounterFill && counterFill.diffPos < 0)) counterFill.diffPos = 0;
 
-    notifyListeners();
+    refresh();
   }
 
   void gestureUp() {
@@ -65,7 +50,7 @@ class Counter with ChangeNotifier {
       counterFill.alignment = Alignment.center;
     }
     counterFill.diffPos = 0.0;
-    notifyListeners();
+    refresh();
   }
 
   void gestureDown() {
@@ -77,7 +62,7 @@ class Counter with ChangeNotifier {
       counterFill.alignment = Alignment.bottomCenter;
     }
     counterFill.diffPos = 0.0;
-    notifyListeners();
+    refresh();
   }
 
   void increment() {
@@ -104,7 +89,7 @@ class Counter with ChangeNotifier {
 
   void setCounter(int value) {
     touchCounters.add(TouchCounter(
-        counter: value, datetime: DateTime.now(), diff: getDiff(value)));
+        counter: value, datetime: DateTime.now(), diff: getDiff(value), type: 'seconds'));
     listAnimation();
   }
 
@@ -133,4 +118,22 @@ class Counter with ChangeNotifier {
   }
 
   void doAnimation() => _animationController.forward();
+}
+
+class CounterFill {
+  int flex;
+  double diffPos;
+  EdgeInsetsGeometry padding;
+  AlignmentGeometry alignment;
+
+  double startYPos;
+  double endYPos;
+
+  CounterFill() {
+    this.padding = EdgeInsets.only(top: 10.0);
+    this.alignment = Alignment.center;
+    this.diffPos = 0.0;
+    this.startYPos = 0.0;
+    this.endYPos = 0.0;
+  }
 }

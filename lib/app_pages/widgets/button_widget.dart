@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:touch_counter_app/providers/home_provider.dart';
+import 'package:touch_counter_app/providers/counter_provider.dart';
 
 class ButtonWidget extends StatefulWidget {
   @override
@@ -35,9 +35,9 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           borderRadius: BorderRadius.circular(30.0),
           onTap: () {
             if (index == 0) {
-              Provider.of<Counter>(context, listen: false).decrement();
+              Provider.of<CounterProvider>(context, listen: false).decrement();
             } else if (index == 1) {
-              Provider.of<Counter>(context, listen: false).reset();
+              Provider.of<CounterProvider>(context, listen: false).reset();
             }
           },
           child: Icon(

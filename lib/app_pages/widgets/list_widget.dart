@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:touch_counter_app/models/touch_counter_model.dart';
-import 'package:touch_counter_app/providers/home_provider.dart';
+import 'package:touch_counter_app/providers/counter_provider.dart';
 
 class ListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final f = new NumberFormat("0.0#");
+    final counter = Provider.of<CounterProvider>(context, listen: true);
     return Padding(
       padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
       child: Container(
@@ -16,15 +16,18 @@ class ListWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: Color(0xFFF6F6F6),
         ),
-        child: Consumer<Counter>(
-          builder: (context, counter, child) => ListView.builder(
-            controller: counter.scrollController,
-            reverse: true,
-            shrinkWrap: true,
-            itemCount: counter.touchCounters.length,
-            itemBuilder: (BuildContext context, int index) {
-              TouchCounter tCounter = counter.touchCounters[index];
-              return Container(
+        child: ListView.builder(
+          controller: counter.scrollController,
+          reverse: true,
+          shrinkWrap: true,
+          itemCount: counter.touchCounters.length,
+          itemBuilder: (BuildContext context, int index) {
+            TouchCounter tCounter = counter.touchCounters[index];
+            return GestureDetector(
+              onTap: () {
+                _changeType(counter, index);
+              },
+              child: Container(
                 margin: EdgeInsets.fromLTRB(2.0, 5.0, 2.0, 5.0),
                 height: 100.0,
                 decoration: BoxDecoration(
@@ -80,26 +83,74 @@ class ListWidget extends StatelessWidget {
                       height: 4,
                       width: 10,
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '${f.format(tCounter.diff.inMilliseconds / 1000)}',
-                          style: TextStyle(fontSize: 20.0),
-                        ),
-                        Text(
-                          'Seconds',
-                          style: TextStyle(color: Colors.grey),
-                        )
-                      ],
+                    Container(
+                      width: 100.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          _buildChild(counter, index),
+                          Text(
+                            '${counter.touchCounters[index].type}',
+                            style: TextStyle(color: Colors.orange),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
+  }
+
+  Widget _buildChild(CounterProvider counter, int index) {
+    final f = new NumberFormat("0.0#");
+    switch (counter.touchCounters[index].type) {
+      case 'seconds':
+        return Text(
+          '${f.format(counter.touchCounters[index].diff.inMilliseconds / 1000)}',
+          style: TextStyle(fontSize: 26.0),
+          overflow: TextOverflow.ellipsis,
+        );
+      case 'minutes':
+        return Text(
+          '${f.format(counter.touchCounters[index].diff.inSeconds / 60)}',
+          style: TextStyle(fontSize: 26.0),
+          overflow: TextOverflow.ellipsis,
+        );
+      case 'hours':
+        return Text(
+          '${f.format(counter.touchCounters[index].diff.inMinutes / 60)}',
+          style: TextStyle(fontSize: 26.0),
+          overflow: TextOverflow.ellipsis,
+        );
+      default:
+        return Text(
+          '${f.format(counter.touchCounters[index].diff.inMilliseconds / 1000)}',
+          style: TextStyle(fontSize: 26.0),
+          overflow: TextOverflow.ellipsis,
+        );
+    }
+  }
+
+  _changeType(CounterProvider counter, int index) {
+    switch (counter.touchCounters[index].type) {
+      case 'seconds':
+        counter.touchCounters[index].type = 'minutes';
+        break;
+      case 'minutes':
+        counter.touchCounters[index].type = 'hours';
+        break;
+      case 'hours':
+        counter.touchCounters[index].type = 'seconds';
+        break;
+      default:
+        counter.touchCounters[index].type = 'minutes';
+        break;
+    }
+    counter.refresh();
   }
 }

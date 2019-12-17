@@ -4,7 +4,7 @@ import 'package:touch_counter_app/app_pages/widgets/button_widget.dart';
 import 'package:touch_counter_app/app_pages/widgets/counter_widget.dart';
 import 'package:touch_counter_app/app_pages/widgets/list_widget.dart';
 import 'package:touch_counter_app/models/admob_model.dart';
-import 'package:touch_counter_app/providers/home_provider.dart';
+import 'package:touch_counter_app/providers/counter_provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -29,48 +29,47 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      builder: (context) => Counter(),
-      child: Scaffold(
-        body: Consumer<Counter>(
-          builder: (context, counter, child) => Stack(
+    final counter = Provider.of<CounterProvider>(context, listen: true);
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  AnimatedContainer(
-                    curve: Curves.fastOutSlowIn,
-                    duration: Duration(milliseconds: 300),
-                    alignment: Alignment.topCenter,
-                    height: counter.isCounterFill
-                        ? MediaQuery.of(context).size.height + counter.counterFill.diffPos
-                        : MediaQuery.of(context).size.height / 2 + counter.counterFill.diffPos,
-                    child: CounterWidget(),
-                  ),
-                  AnimatedContainer(
-                    curve: Curves.fastOutSlowIn,
-                    duration: Duration(milliseconds: 300),
-                    alignment: Alignment.bottomCenter,
-                    height: counter.isCounterFill
-                        ? 0.0 - counter.counterFill.diffPos
-                        : MediaQuery.of(context).size.height / 2 - counter.counterFill.diffPos,
-                    child: ListWidget(),
-                  )
-                ],
+              AnimatedContainer(
+                curve: Curves.fastOutSlowIn,
+                duration: Duration(milliseconds: 300),
+                alignment: Alignment.topCenter,
+                height: counter.isCounterFill
+                    ? MediaQuery.of(context).size.height +
+                        counter.counterFill.diffPos
+                    : MediaQuery.of(context).size.height / 2 +
+                        counter.counterFill.diffPos,
+                child: CounterWidget(),
               ),
-              Padding(
-                padding: counter.counterFill.padding,
-                child: AnimatedContainer(
-                  curve: Curves.fastOutSlowIn,
-                  duration: Duration(milliseconds: 300),
-                  alignment: counter.counterFill.alignment,
-                  child: ButtonWidget(),
-                ),
-              ),
+              AnimatedContainer(
+                curve: Curves.fastOutSlowIn,
+                duration: Duration(milliseconds: 300),
+                alignment: Alignment.bottomCenter,
+                height: counter.isCounterFill
+                    ? 0.0 - counter.counterFill.diffPos
+                    : MediaQuery.of(context).size.height / 2 -
+                        counter.counterFill.diffPos,
+                child: ListWidget(),
+              )
             ],
           ),
-        ),
+          Padding(
+            padding: counter.counterFill.padding,
+            child: AnimatedContainer(
+              curve: Curves.fastOutSlowIn,
+              duration: Duration(milliseconds: 300),
+              alignment: counter.counterFill.alignment,
+              child: ButtonWidget(),
+            ),
+          ),
+        ],
       ),
     );
   }
