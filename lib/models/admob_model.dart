@@ -3,10 +3,13 @@ import 'dart:io' show Platform;
 
 class AdmobCounter {
   static const String appId_android = "ca-app-pub-8126362785815437~5741192322";
-  static const String adUnitId_android = "ca-app-pub-8126362785815437/6998433679";
+  static const String adUnitId_android =
+      "ca-app-pub-8126362785815437/6998433679";
   static const String appId_Ios = "ca-app-pub-8126362785815437~8091328965";
   static const String adUnitId_Ios = "ca-app-pub-8126362785815437/7133809820";
-  static const List<String> adTestDevices = ['c436c35d91946bdb614e712ae37a306e',];
+  static const List<String> adTestDevices = [
+    'c436c35d91946bdb614e712ae37a306e',
+  ];
 
   String appId;
   String adUnitId;
@@ -42,6 +45,7 @@ class AdmobCounter {
   }
 
   void admobBannerShow() {
+    if (myBanner == null) admobCounterInit();
     myBanner
       ..load()
       ..show(
@@ -49,5 +53,12 @@ class AdmobCounter {
         horizontalCenterOffset: 0.0,
         anchorType: AnchorType.bottom,
       );
+  }
+
+  void admobBannerHide() {
+    if (myBanner != null) {
+      myBanner.dispose();
+      myBanner = null;
+    }
   }
 }

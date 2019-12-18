@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:touch_counter_app/app_pages/widgets/button_widget.dart';
 import 'package:touch_counter_app/app_pages/widgets/counter_widget.dart';
 import 'package:touch_counter_app/app_pages/widgets/list_widget.dart';
-import 'package:touch_counter_app/models/admob_model.dart';
+import 'package:touch_counter_app/main.dart';
 import 'package:touch_counter_app/providers/counter_provider.dart';
 
 class Home extends StatefulWidget {
@@ -12,7 +12,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  AdmobCounter admobCounter = new AdmobCounter();
 
   @override
   void initState() {
@@ -24,7 +23,7 @@ class _HomeState extends State<Home> {
   @override
   void dispose() {
     super.dispose();
-    admobCounter.myBanner.dispose();
+    admobCounter.admobBannerHide();
   }
 
   @override

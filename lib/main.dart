@@ -8,18 +8,35 @@ import 'app_pages/home.dart';
 
 void main() => runApp(TouchCounterApp());
 
-class TouchCounterApp extends StatelessWidget {
-  final AdmobCounter ac = new AdmobCounter();
+AdmobCounter admobCounter = new AdmobCounter();
 
+class TouchCounterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    FirebaseAdMob.instance.initialize(appId: ac.appId);
+    FirebaseAdMob.instance.initialize(appId: admobCounter.appId);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Touch Counter',
       theme: ThemeData(
+        brightness: Brightness.light,
         primaryColor: Color(0xFFFFB339),
         accentColor: Color(0xFFFFCC66),
+        textTheme: TextTheme(
+          body1: TextStyle(
+              fontSize: 20.0,
+              color: Colors.black54,
+              fontWeight: FontWeight.w300),
+          body2: TextStyle(
+              fontSize: 18.0,
+              color: Colors.black54,
+              fontWeight: FontWeight.w600),
+          display1: TextStyle(
+              fontSize: 16.0,
+              color: Colors.black45,
+              fontWeight: FontWeight.w600),
+          display2: TextStyle(
+              fontSize: 14, color: Colors.black45, fontWeight: FontWeight.w600),
+        ),
       ),
       home: MultiProvider(
         providers: [
