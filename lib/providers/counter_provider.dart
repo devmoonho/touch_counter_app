@@ -9,9 +9,11 @@ class CounterProvider with ChangeNotifier {
   CounterFill counterFill = new CounterFill();
   bool isCounterFill = false;
   bool vibration = false;
+  bool hideList = false;
 
   String diffType = 'seconds';
 
+  
   AnimationController _animationController;
 
   void refresh() => notifyListeners();

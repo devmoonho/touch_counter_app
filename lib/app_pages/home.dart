@@ -12,7 +12,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   @override
   void initState() {
     super.initState();
@@ -28,7 +27,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final counter = Provider.of<CounterProvider>(context, listen: true);
+    final counterProvider = Provider.of<CounterProvider>(context, listen: true);
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -40,31 +39,33 @@ class _HomeState extends State<Home> {
                 curve: Curves.fastOutSlowIn,
                 duration: Duration(milliseconds: 300),
                 alignment: Alignment.topCenter,
-                height: counter.isCounterFill
+                height: counterProvider.isCounterFill
                     ? MediaQuery.of(context).size.height +
-                        counter.counterFill.diffPos
+                        counterProvider.counterFill.diffPos
                     : MediaQuery.of(context).size.height / 2 +
-                        counter.counterFill.diffPos,
+                        counterProvider.counterFill.diffPos,
                 child: CounterWidget(),
               ),
-              AnimatedContainer(
-                curve: Curves.fastOutSlowIn,
-                duration: Duration(milliseconds: 300),
-                alignment: Alignment.bottomCenter,
-                height: counter.isCounterFill
-                    ? 0.0 - counter.counterFill.diffPos
-                    : MediaQuery.of(context).size.height / 2 -
-                        counter.counterFill.diffPos,
-                child: ListWidget(),
-              )
+              counterProvider.hideList
+                  ? Container()
+                  : AnimatedContainer(
+                      curve: Curves.fastOutSlowIn,
+                      duration: Duration(milliseconds: 300),
+                      alignment: Alignment.bottomCenter,
+                      height: counterProvider.isCounterFill
+                          ? 0.0 - counterProvider.counterFill.diffPos
+                          : MediaQuery.of(context).size.height / 2 -
+                              counterProvider.counterFill.diffPos,
+                      child: ListWidget(),
+                    )
             ],
           ),
           Padding(
-            padding: counter.counterFill.padding,
+            padding: counterProvider.counterFill.padding,
             child: AnimatedContainer(
               curve: Curves.fastOutSlowIn,
               duration: Duration(milliseconds: 300),
-              alignment: counter.counterFill.alignment,
+              alignment: counterProvider.counterFill.alignment,
               child: ButtonWidget(),
             ),
           ),

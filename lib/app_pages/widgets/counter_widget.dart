@@ -3,7 +3,6 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:touch_counter_app/main.dart';
 import 'package:touch_counter_app/providers/counter_provider.dart';
 import 'package:vibration/vibration.dart';
 
@@ -132,7 +131,7 @@ class _CounterWidgetState extends State<CounterWidget>
     );
   }
 
-  Future<String> _saveCondition() async {
+  Future<String> _saveCondition(CounterProvider counterProvider) async {
     TextEditingController _controller;
     _controller = new TextEditingController(text: _currentTime());
     _controller.selection =
@@ -223,7 +222,9 @@ class _CounterWidgetState extends State<CounterWidget>
           ),
         );
       },
-    );
+    ).whenComplete(() {
+      counterProvider.hideList = false;
+    });
   }
 
   String _currentTime() {
@@ -323,7 +324,7 @@ class _CounterWidgetState extends State<CounterWidget>
                     .asMap()
                     .entries
                     .map(
-                      (MapEntry map) => _buildIcon(map.key),
+                      (MapEntry map) => _buildIcon(map.key, counterProvider),
                     )
                     .toList(),
               ),
@@ -334,7 +335,7 @@ class _CounterWidgetState extends State<CounterWidget>
     );
   }
 
-  Widget _buildIcon(int index) {
+  Widget _buildIcon(int index, CounterProvider counterProvider) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -342,8 +343,8 @@ class _CounterWidgetState extends State<CounterWidget>
           setState(() {
             _selectedIndex = index;
             if (index == 0) {
-              admobCounter.admobBannerHide();
-              _saveCondition();
+              counterProvider.hideList = true;
+              _saveCondition(counterProvider);
             } else
               _loadCondition(new List<String>());
           });
