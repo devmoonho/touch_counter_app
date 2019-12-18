@@ -222,14 +222,12 @@ class _CounterWidgetState extends State<CounterWidget>
           ),
         );
       },
-    ).whenComplete(() {
-      counterProvider.hideList = false;
-    });
+    );
   }
 
   String _currentTime() {
     return formatDate(DateTime.now().toUtc().add(Duration(hours: 9)),
-        [yyyy, mm, dd, hh, nn, ss]);
+        [yyyy,'/', mm,'/', dd, ' ', hh,':', nn,':', ss]);
   }
 
   @override
@@ -343,7 +341,6 @@ class _CounterWidgetState extends State<CounterWidget>
           setState(() {
             _selectedIndex = index;
             if (index == 0) {
-              counterProvider.hideList = true;
               _saveCondition(counterProvider);
             } else
               _loadCondition(new List<String>());

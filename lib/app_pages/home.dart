@@ -29,6 +29,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final counterProvider = Provider.of<CounterProvider>(context, listen: true);
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Stack(
         children: <Widget>[
           Column(
@@ -46,18 +47,16 @@ class _HomeState extends State<Home> {
                         counterProvider.counterFill.diffPos,
                 child: CounterWidget(),
               ),
-              counterProvider.hideList
-                  ? Container()
-                  : AnimatedContainer(
-                      curve: Curves.fastOutSlowIn,
-                      duration: Duration(milliseconds: 300),
-                      alignment: Alignment.bottomCenter,
-                      height: counterProvider.isCounterFill
-                          ? 0.0 - counterProvider.counterFill.diffPos
-                          : MediaQuery.of(context).size.height / 2 -
-                              counterProvider.counterFill.diffPos,
-                      child: ListWidget(),
-                    )
+              AnimatedContainer(
+                curve: Curves.fastOutSlowIn,
+                duration: Duration(milliseconds: 300),
+                alignment: Alignment.bottomCenter,
+                height: counterProvider.isCounterFill
+                    ? 0.0 - counterProvider.counterFill.diffPos
+                    : MediaQuery.of(context).size.height / 2 -
+                        counterProvider.counterFill.diffPos,
+                child: ListWidget(),
+              )
             ],
           ),
           Padding(

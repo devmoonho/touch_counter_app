@@ -39,7 +39,6 @@ class AdmobCounter {
       size: AdSize.smartBanner,
       targetingInfo: targetingInfo,
       listener: (MobileAdEvent event) {
-        print("BannerAd event is $event");
       },
     );
   }
