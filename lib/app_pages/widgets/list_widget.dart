@@ -16,31 +16,17 @@ class _ListWidgetState extends State<ListWidget>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
-    // _animationController =
-    //     AnimationController(duration: Duration(milliseconds: 100), vsync: this);
-    // _animation =
-    //     Tween<double>(begin: 1.0, end: 1.2).animate(_animationController);
-    // _animationController.addStatusListener((status) {
-    //   if (status == AnimationStatus.completed) {
-    //     _animationController.reverse();
-    //   } else if (status == AnimationStatus.dismissed) {
-    //     _animationController.stop(canceled: true);
-    //   }
-    // });
-    // _animationController.forward();
     super.initState();
   }
 
   @override
   void dispose() {
-    // _animationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final counter = Provider.of<CounterProvider>(context, listen: true);
-
     return Padding(
       padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
       child: Container(
@@ -100,10 +86,7 @@ class _ListWidgetState extends State<ListWidget>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          formatDate(
-                            tCounter.datetime,
-                            [HH, ':', nn, ':', ss],
-                          ),
+                          formatDate(tCounter.datetime, [HH, ':', nn, ':', ss]),
                           style: TextStyle(fontSize: 24.0),
                         ),
                         SizedBox(
@@ -111,9 +94,7 @@ class _ListWidgetState extends State<ListWidget>
                         ),
                         Text(
                           formatDate(
-                            tCounter.datetime,
-                            [yyyy, '-', mm, '-', dd],
-                          ),
+                              tCounter.datetime, [yyyy, '-', mm, '-', dd]),
                           style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                       ],
@@ -133,7 +114,10 @@ class _ListWidgetState extends State<ListWidget>
                           _buildChild(counter, index),
                           Text(
                             '${counter.touchCounters[index].type}',
-                            style: TextStyle(color: Colors.orange, fontSize: 18.0),
+                            style: TextStyle(
+                                color: _getTypeColor(
+                                    counter.touchCounters[index].type),
+                                fontSize: 18.0, fontWeight: FontWeight.w100),
                           )
                         ],
                       ),
@@ -148,11 +132,22 @@ class _ListWidgetState extends State<ListWidget>
     );
   }
 
+  Color _getTypeColor(String type) {
+    switch (type) {
+      case 'seconds':
+        return Colors.orange;
+      case 'minutes':
+        return Colors.lightGreen;
+      case 'hours':
+        return Colors.lightBlue;
+      default:
+        return Colors.orange;
+    }
+  }
+
   Widget _buildChild(CounterProvider counter, int index) {
     final f = new NumberFormat("0.0#");
-
     String txt = '';
-
     switch (counter.touchCounters[index].type) {
       case 'seconds':
         txt =

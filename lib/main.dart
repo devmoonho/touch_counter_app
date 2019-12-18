@@ -9,7 +9,7 @@ import 'app_pages/home.dart';
 void main() => runApp(TouchCounterApp());
 
 class TouchCounterApp extends StatelessWidget {
-  AdmobCounter ac = new AdmobCounter();
+  final AdmobCounter ac = new AdmobCounter();
 
   @override
   Widget build(BuildContext context) {
