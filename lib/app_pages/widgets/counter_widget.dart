@@ -1,4 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:touch_counter_app/providers/counter_provider.dart';
 import 'package:vibration/vibration.dart';
@@ -10,6 +12,12 @@ class CounterWidget extends StatefulWidget {
 
 class _CounterWidgetState extends State<CounterWidget>
     with SingleTickerProviderStateMixin {
+  int _selectedIndex = 0;
+  List<IconData> _icons = [
+    FontAwesomeIcons.walking,
+    FontAwesomeIcons.biking,
+  ];
+
   @override
   Widget build(BuildContext context) {
     final counterProvider =
@@ -66,21 +74,25 @@ class _CounterWidgetState extends State<CounterWidget>
                     });
                   },
                   child: Container(
-                    alignment: MediaQuery.of(context).orientation ==
-                            Orientation.portrait
-                        ? Alignment.center
-                        : Alignment.topCenter,
                     constraints: BoxConstraints.expand(),
                     child: TextAnimation(
                       child: Container(
-                        alignment: Alignment.center,
-                        child: Text(
+                        padding: MediaQuery.of(context).orientation ==
+                                Orientation.portrait
+                            ? EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0)
+                            : EdgeInsets.only(top: 10.0, left: 150.0, right: 150.0),
+                        alignment: MediaQuery.of(context).orientation ==
+                                Orientation.portrait
+                            ? Alignment.center
+                            : Alignment.topCenter,
+                        child: AutoSizeText(
                           '${counterProvider.value}',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Rubik',
                             fontSize: 150,
                           ),
+                          maxLines: 1,
                         ),
                       ),
                     ),
@@ -88,7 +100,51 @@ class _CounterWidgetState extends State<CounterWidget>
                 ),
               ),
             ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 40.0, left: 10.0, right: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: _icons
+                    .asMap()
+                    .entries
+                    .map(
+                      (MapEntry map) => _buildIcon(map.key),
+                    )
+                    .toList(),
+              ),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildIcon(int index) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        child: Container(
+          height: 60.0,
+          width: 60.0,
+          decoration: BoxDecoration(
+            color: _selectedIndex == index
+                ? Theme.of(context).accentColor
+                : Color(0xFFE7EBEE),
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+          child: Icon(
+            _icons[index],
+            size: 25.0,
+            color: _selectedIndex == index
+                ? Theme.of(context).primaryColor
+                : Color(0xFFB4C1C4),
+          ),
         ),
       ),
     );
