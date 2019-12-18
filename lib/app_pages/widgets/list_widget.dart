@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -5,10 +7,40 @@ import 'package:provider/provider.dart';
 import 'package:touch_counter_app/models/touch_counter_model.dart';
 import 'package:touch_counter_app/providers/counter_provider.dart';
 
-class ListWidget extends StatelessWidget {
+class ListWidget extends StatefulWidget {
+  @override
+  _ListWidgetState createState() => _ListWidgetState();
+}
+
+class _ListWidgetState extends State<ListWidget>
+    with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    // _animationController =
+    //     AnimationController(duration: Duration(milliseconds: 100), vsync: this);
+    // _animation =
+    //     Tween<double>(begin: 1.0, end: 1.2).animate(_animationController);
+    // _animationController.addStatusListener((status) {
+    //   if (status == AnimationStatus.completed) {
+    //     _animationController.reverse();
+    //   } else if (status == AnimationStatus.dismissed) {
+    //     _animationController.stop(canceled: true);
+    //   }
+    // });
+    // _animationController.forward();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final counter = Provider.of<CounterProvider>(context, listen: true);
+
     return Padding(
       padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
       child: Container(
@@ -26,6 +58,12 @@ class ListWidget extends StatelessWidget {
             return GestureDetector(
               onTap: () {
                 _changeType(counter, index);
+                tCounter.animatedValue = 20.0;
+                Timer(Duration(milliseconds: 200), () {
+                  tCounter.animatedValue = 0.0;
+                  setState(() {});
+                });
+                setState(() {});
               },
               child: Container(
                 margin: EdgeInsets.fromLTRB(2.0, 5.0, 2.0, 5.0),
@@ -46,10 +84,11 @@ class ListWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
+                      padding: EdgeInsets.only(left: 10.0),
                       alignment: Alignment.center,
                       child: Text(
                         tCounter.counter.toString(),
-                        style: TextStyle(fontSize: 30.0),
+                        style: TextStyle(fontSize: 26.0, color: Colors.orange),
                       ),
                     ),
                     SizedBox(
@@ -65,7 +104,7 @@ class ListWidget extends StatelessWidget {
                             tCounter.datetime,
                             [HH, ':', nn, ':', ss],
                           ),
-                          style: TextStyle(fontSize: 30.0),
+                          style: TextStyle(fontSize: 24.0),
                         ),
                         SizedBox(
                           height: 5.0,
@@ -75,7 +114,7 @@ class ListWidget extends StatelessWidget {
                             tCounter.datetime,
                             [yyyy, '-', mm, '-', dd],
                           ),
-                          style: TextStyle(fontSize: 20.0, color: Colors.grey),
+                          style: TextStyle(fontSize: 16, color: Colors.grey),
                         ),
                       ],
                     ),
@@ -83,15 +122,18 @@ class ListWidget extends StatelessWidget {
                       height: 4,
                       width: 10,
                     ),
-                    Container(
-                      width: 100.0,
+                    AnimatedContainer(
+                      padding: EdgeInsets.only(left: tCounter.animatedValue),
+                      duration: Duration(milliseconds: 100),
+                      curve: Curves.easeInOut,
+                      width: 120.0,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           _buildChild(counter, index),
                           Text(
                             '${counter.touchCounters[index].type}',
-                            style: TextStyle(color: Colors.orange),
+                            style: TextStyle(color: Colors.orange, fontSize: 18.0),
                           )
                         ],
                       ),
@@ -108,32 +150,27 @@ class ListWidget extends StatelessWidget {
 
   Widget _buildChild(CounterProvider counter, int index) {
     final f = new NumberFormat("0.0#");
+
+    String txt = '';
+
     switch (counter.touchCounters[index].type) {
       case 'seconds':
-        return Text(
-          '${f.format(counter.touchCounters[index].diff.inMilliseconds / 1000)}',
-          style: TextStyle(fontSize: 26.0),
-          overflow: TextOverflow.ellipsis,
-        );
+        txt =
+            '${f.format(counter.touchCounters[index].diff.inMilliseconds / 1000)}';
+        break;
       case 'minutes':
-        return Text(
-          '${f.format(counter.touchCounters[index].diff.inSeconds / 60)}',
-          style: TextStyle(fontSize: 26.0),
-          overflow: TextOverflow.ellipsis,
-        );
+        txt = '${f.format(counter.touchCounters[index].diff.inSeconds / 60)}';
+        break;
       case 'hours':
-        return Text(
-          '${f.format(counter.touchCounters[index].diff.inMinutes / 60)}',
-          style: TextStyle(fontSize: 26.0),
-          overflow: TextOverflow.ellipsis,
-        );
+        txt = '${f.format(counter.touchCounters[index].diff.inMinutes / 60)}';
+        break;
       default:
-        return Text(
-          '${f.format(counter.touchCounters[index].diff.inMilliseconds / 1000)}',
-          style: TextStyle(fontSize: 26.0),
-          overflow: TextOverflow.ellipsis,
-        );
+        txt =
+            '${f.format(counter.touchCounters[index].diff.inMilliseconds / 1000)}';
+        break;
     }
+    return Text('$txt',
+        style: TextStyle(fontSize: 26.0), overflow: TextOverflow.ellipsis);
   }
 
   _changeType(CounterProvider counter, int index) {
@@ -152,5 +189,28 @@ class ListWidget extends StatelessWidget {
         break;
     }
     counter.refresh();
+  }
+}
+
+class AnimatedListItem extends AnimatedWidget {
+  final Tween<double> _opacityTween = Tween(begin: 1, end: 0);
+
+  final GestureTapCallback onTap;
+  final bool selected;
+
+  AnimatedListItem(
+      {Key key,
+      @required Animation<double> animation,
+      this.onTap,
+      this.selected})
+      : super(key: key, listenable: animation);
+
+  @override
+  Widget build(BuildContext context) {
+    final Animation<double> animation = listenable;
+    return Opacity(
+      opacity: selected ? 1.0 : _opacityTween.evaluate(animation),
+      child: ListTile(title: Text("Item"), onTap: onTap),
+    );
   }
 }

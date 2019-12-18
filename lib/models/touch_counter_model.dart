@@ -3,8 +3,15 @@ class TouchCounter {
   DateTime datetime;
   Duration diff;
   String type;
+  double animatedValue;
 
-  TouchCounter({this.counter, this.datetime, this.diff, this.type});
+  TouchCounter({
+    this.counter,
+    this.datetime,
+    this.diff,
+    this.type,
+    this.animatedValue,
+  });
 }
 
 final List<TouchCounter> counterTimers = [

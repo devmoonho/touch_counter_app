@@ -110,7 +110,6 @@ class _TextAnimationState extends State<TextAnimation>
     with SingleTickerProviderStateMixin {
   Animation _animation;
   AnimationController _animationController;
-  Timer timer;
 
   @override
   void initState() {
@@ -131,7 +130,6 @@ class _TextAnimationState extends State<TextAnimation>
 
   @override
   void dispose() {
-    timer.cancel();
     _animationController.dispose();
     super.dispose();
   }

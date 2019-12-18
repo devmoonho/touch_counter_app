@@ -89,7 +89,12 @@ class CounterProvider with ChangeNotifier {
 
   void setCounter(int value) {
     touchCounters.add(TouchCounter(
-        counter: value, datetime: DateTime.now(), diff: getDiff(value), type: 'seconds'));
+      counter: value,
+      datetime: DateTime.now(),
+      diff: getDiff(value),
+      type: 'seconds',
+      animatedValue: 0.0,
+    ));
     listAnimation();
   }
 
