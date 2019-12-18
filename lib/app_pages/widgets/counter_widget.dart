@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:touch_counter_app/providers/counter_provider.dart';
@@ -222,12 +223,19 @@ class _CounterWidgetState extends State<CounterWidget>
           ),
         );
       },
-    );
+    ).whenComplete(() {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeRight,
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    });
   }
 
   String _currentTime() {
     return formatDate(DateTime.now().toUtc().add(Duration(hours: 9)),
-        [yyyy,'/', mm,'/', dd, ' ', hh,':', nn,':', ss]);
+        [yyyy, '/', mm, '/', dd, ' ', hh, ':', nn, ':', ss]);
   }
 
   @override
@@ -341,6 +349,10 @@ class _CounterWidgetState extends State<CounterWidget>
           setState(() {
             _selectedIndex = index;
             if (index == 0) {
+              SystemChrome.setPreferredOrientations([
+                DeviceOrientation.portraitUp,
+                DeviceOrientation.portraitDown
+              ]);
               _saveCondition(counterProvider);
             } else
               _loadCondition(new List<String>());
