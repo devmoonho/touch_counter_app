@@ -59,10 +59,11 @@ class _CounterWidgetState extends State<CounterWidget>
                   child: ListView.builder(
                     itemCount: items.length,
                     itemBuilder: (context, index) {
-                      final item = items[index];
                       return Dismissible(
-                        key: Key(item),
-                        onDismissed: (direction) {},
+                        key: Key(items[index]),
+                        onDismissed: (direction) {
+                         counterProvider.removePreference(items[index]);
+                        },
                         direction: DismissDirection.endToStart,
                         background: Card(
                           color: Colors.red,
