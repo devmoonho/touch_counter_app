@@ -23,19 +23,27 @@ class TouchCounterApp extends StatelessWidget {
         accentColor: Color(0xFFFFCC66),
         textTheme: TextTheme(
           body1: TextStyle(
-              fontSize: 20.0,
+              fontSize: 24.0,
               color: Colors.black54,
-              fontWeight: FontWeight.w300),
+              fontWeight: FontWeight.w600),
           body2: TextStyle(
-              fontSize: 18.0,
+              fontSize: 22.0,
               color: Colors.black54,
               fontWeight: FontWeight.w600),
           display1: TextStyle(
-              fontSize: 16.0,
+              fontSize: 20.0,
               color: Colors.black45,
               fontWeight: FontWeight.w600),
           display2: TextStyle(
-              fontSize: 14, color: Colors.black45, fontWeight: FontWeight.w600),
+            fontSize: 18,
+            color: Colors.black45,
+            fontWeight: FontWeight.w600,
+          ),
+          display3: TextStyle(
+            fontSize: 16,
+            color: Colors.black45,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       home: MultiProvider(
