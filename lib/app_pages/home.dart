@@ -17,6 +17,10 @@ class _HomeState extends State<Home> {
     super.initState();
     admobCounter.admobCounterInit();
     admobCounter.admobBannerShow();
+
+    final counterProvider =
+        Provider.of<CounterProvider>(context, listen: false);
+    counterProvider.initPreference();
   }
 
   @override
@@ -28,6 +32,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final counterProvider = Provider.of<CounterProvider>(context, listen: true);
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Stack(

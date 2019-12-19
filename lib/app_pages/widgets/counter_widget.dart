@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:touch_counter_app/providers/counter_provider.dart';
-import 'package:vibration/vibration.dart';
 
 class CounterWidget extends StatefulWidget {
   @override
@@ -20,7 +19,8 @@ class _CounterWidgetState extends State<CounterWidget>
     FontAwesomeIcons.folderOpen,
   ];
 
-  Future<void> _loadCondition(List<String> items) async {
+  Future<void> _loadCondition(List<String> items,
+      CounterProvider counterProvider, StateSetter setState) async {
     return showDialog(
       context: context,
       builder: (context) {
@@ -36,15 +36,16 @@ class _CounterWidgetState extends State<CounterWidget>
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                      "Open List",
+                      "OPEN COUNTER",
                       style: Theme.of(context)
                           .textTheme
-                          .body1
+                          .body2
                           .apply(color: Colors.orange),
                     ),
                   ],
@@ -63,7 +64,7 @@ class _CounterWidgetState extends State<CounterWidget>
                         key: Key(item),
                         onDismissed: (direction) {},
                         direction: DismissDirection.endToStart,
-                        background: Container(
+                        background: Card(
                           color: Colors.red,
                           child: Align(
                             child: Row(
@@ -91,14 +92,19 @@ class _CounterWidgetState extends State<CounterWidget>
                         ),
                         child: InkWell(
                             onTap: () {
-                              Navigator.of(context).pop();
+                              counterProvider
+                                  .getPreference(items[index])
+                                  .whenComplete(() {
+                                setState(() {});
+                                Navigator.of(context).pop();
+                              });
                             },
                             child: ListTile(
                                 title: Text(
                               '${items[index]}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .display3
+                                  .display2
                                   .apply(color: Colors.orange),
                             ))),
                       );
@@ -109,13 +115,13 @@ class _CounterWidgetState extends State<CounterWidget>
                   child: Container(
                     padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(32.0),
                           bottomRight: Radius.circular(32.0)),
                     ),
                     child: Text(
-                      "Ok",
+                      "OK",
                       style: TextStyle(color: Colors.white),
                       textAlign: TextAlign.center,
                     ),
@@ -162,7 +168,7 @@ class _CounterWidgetState extends State<CounterWidget>
                       "SAVE COUNTER",
                       style: Theme.of(context)
                           .textTheme
-                          .body1
+                          .body2
                           .apply(color: Colors.orange),
                     ),
                   ],
@@ -215,7 +221,12 @@ class _CounterWidgetState extends State<CounterWidget>
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).pop();
+                    counterProvider
+                        .setPreference(
+                            _controller.text, counterProvider.touchCounters)
+                        .whenComplete(() {
+                      Navigator.of(context).pop();
+                    });
                   },
                 ),
               ],
@@ -236,6 +247,11 @@ class _CounterWidgetState extends State<CounterWidget>
   String _currentTime() {
     return formatDate(DateTime.now().toUtc().add(Duration(hours: 9)),
         [yyyy, '/', mm, '/', dd, ' ', hh, ':', nn, ':', ss]);
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -286,12 +302,8 @@ class _CounterWidgetState extends State<CounterWidget>
                 child: InkWell(
                   onTap: () {
                     counterProvider.increment();
-                    if (counterProvider.vibration) {
-                      Vibration.vibrate();
-                    }
-                    setState(() {
-                      counterProvider.doAnimation();
-                    });
+                    if (counterProvider.vibration) {}
+                    counterProvider.doAnimation();
                   },
                   child: Container(
                     constraints: BoxConstraints.expand(),
@@ -301,7 +313,7 @@ class _CounterWidgetState extends State<CounterWidget>
                                 Orientation.portrait
                             ? EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0)
                             : EdgeInsets.only(
-                                top: 10.0, left: 150.0, right: 150.0),
+                                top: 25.0, left: 150.0, right: 150.0),
                         alignment: MediaQuery.of(context).orientation ==
                                 Orientation.portrait
                             ? Alignment.center
@@ -323,7 +335,7 @@ class _CounterWidgetState extends State<CounterWidget>
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(top: 40.0, left: 10.0, right: 10.0),
+                  const EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: _icons
@@ -355,7 +367,9 @@ class _CounterWidgetState extends State<CounterWidget>
               ]);
               _saveCondition(counterProvider);
             } else
-              _loadCondition(new List<String>());
+              counterProvider
+                  .getPreferenceKeys()
+                  .then((x) => _loadCondition(x, counterProvider, setState));
           });
         },
         child: Container(

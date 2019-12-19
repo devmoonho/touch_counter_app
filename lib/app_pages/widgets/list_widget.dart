@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:touch_counter_app/models/touch_counter_model.dart';
@@ -16,6 +18,11 @@ class _ListWidgetState extends State<ListWidget>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
+    final counterProvider =
+        Provider.of<CounterProvider>(context, listen: false);
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      counterProvider.listAnimation();
+    });
     super.initState();
   }
 
@@ -26,7 +33,7 @@ class _ListWidgetState extends State<ListWidget>
 
   @override
   Widget build(BuildContext context) {
-    final counter = Provider.of<CounterProvider>(context, listen: true);
+    final counterProvider = Provider.of<CounterProvider>(context, listen: true);
     return Padding(
       padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
       child: Container(
@@ -35,15 +42,15 @@ class _ListWidgetState extends State<ListWidget>
           color: Color(0xFFF6F6F6),
         ),
         child: ListView.builder(
-          controller: counter.scrollController,
+          controller: counterProvider.scrollController,
           reverse: true,
           shrinkWrap: true,
-          itemCount: counter.touchCounters.length,
+          itemCount: counterProvider.touchCounters.length,
           itemBuilder: (BuildContext context, int index) {
-            TouchCounter tCounter = counter.touchCounters[index];
+            TouchCounterModel tCounter = counterProvider.touchCounters[index];
             return GestureDetector(
               onTap: () {
-                _changeType(counter, index);
+                _changeType(counterProvider, index);
                 tCounter.animatedValue = 20.0;
                 Timer(Duration(milliseconds: 200), () {
                   tCounter.animatedValue = 0.0;
@@ -70,11 +77,13 @@ class _ListWidgetState extends State<ListWidget>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
+                      width: 60.0,
                       padding: EdgeInsets.only(left: 10.0),
                       alignment: Alignment.center,
-                      child: Text(
+                      child: AutoSizeText(
                         tCounter.counter.toString(),
                         style: TextStyle(fontSize: 26.0, color: Colors.orange),
+                        maxLines: 1,
                       ),
                     ),
                     SizedBox(
@@ -106,18 +115,19 @@ class _ListWidgetState extends State<ListWidget>
                     AnimatedContainer(
                       padding: EdgeInsets.only(left: tCounter.animatedValue),
                       duration: Duration(milliseconds: 100),
-                      curve: Curves.easeInOut,
+                      curve: Curves.fastOutSlowIn,
                       width: 120.0,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          _buildChild(counter, index),
+                          _buildChild(counterProvider, index),
                           Text(
-                            '${counter.touchCounters[index].type}',
+                            '${counterProvider.touchCounters[index].type}',
                             style: TextStyle(
                                 color: _getTypeColor(
-                                    counter.touchCounters[index].type),
-                                fontSize: 18.0, fontWeight: FontWeight.w100),
+                                    counterProvider.touchCounters[index].type),
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w100),
                           )
                         ],
                       ),

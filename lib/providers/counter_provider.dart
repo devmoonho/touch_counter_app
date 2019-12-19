@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:touch_counter_app/models/touch_counter_model.dart';
+
+const String CURRENT_KEY = 'currentlottokey!@#%^&*()_';
+const String DEFAULT_KEY = 'Touch Counter';
 
 class CounterProvider with ChangeNotifier {
   int value = 0;
-  List<TouchCounter> touchCounters = [];
+  List<TouchCounterModel> touchCounters = [];
   ScrollController scrollController = new ScrollController();
 
   CounterFill counterFill = new CounterFill();
@@ -11,10 +17,73 @@ class CounterProvider with ChangeNotifier {
   bool vibration = false;
 
   String diffType = 'seconds';
-  
+
   AnimationController _animationController;
 
   void refresh() => notifyListeners();
+
+  Future<List<TouchCounterModel>> initPreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // prefs.clear();
+    if (prefs.getStringList(await getCurrentKey())?.isEmpty ?? true) {
+      setCurrentKey(DEFAULT_KEY);
+      return new List<TouchCounterModel>();
+    } else {
+      List<TouchCounterModel> ret = new List<TouchCounterModel>();
+      ret = prefs
+          .getStringList(await getCurrentKey())
+          .map((x) => TouchCounterModel.fromMap(json.decode(x)))
+          .toList();
+
+      value = ret.length;
+      touchCounters = ret;
+      refresh();
+      return ret;
+    }
+  }
+
+  Future<void> getPreference(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var jsonList = prefs.getStringList(key);
+    touchCounters =
+        jsonList.map((x) => TouchCounterModel.fromMap(json.decode(x))).toList();
+
+    await setCurrentKey(key);
+    value = touchCounters.length;
+    refresh();
+    return touchCounters;
+  }
+
+  Future<void> setPreference(String key, List<TouchCounterModel> list) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var jsonList = list.map((x) => json.encode(x.toMap())).toList();
+    await prefs.setStringList(key, jsonList);
+    setCurrentKey(key);
+  }
+
+  Future<void> setCurrentKey(String currentKey) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(CURRENT_KEY, currentKey);
+  }
+
+  Future<String> getCurrentKey() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(CURRENT_KEY);
+  }
+
+  Future<List<String>> getPreferenceKeys() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> list = prefs.getKeys().toList().reversed.toList();
+    // without CURRENT_KEY
+    list.remove(CURRENT_KEY);
+    return list;
+  }
+
+  Future<void> removePreference(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove(key);
+  }
 
   double get StartYPos {
     return counterFill.startYPos;
@@ -71,30 +140,33 @@ class CounterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void decrement() {
+  void decrement() async {
     if (value > 0) {
       value -= 1;
       touchCounters.removeAt(value);
     } else {
       value = 0;
     }
+    setPreference(await getCurrentKey(), touchCounters);
     notifyListeners();
   }
 
-  void reset() {
+  void reset() async {
     value = 0;
     touchCounters = [];
+    setPreference(await getCurrentKey(), touchCounters);
     notifyListeners();
   }
 
-  void setCounter(int value) {
-    touchCounters.add(TouchCounter(
+  void setCounter(int value) async {
+    touchCounters.add(TouchCounterModel(
       counter: value,
       datetime: DateTime.now(),
       diff: getDiff(value),
       type: 'seconds',
       animatedValue: 0.0,
     ));
+    setPreference(await getCurrentKey(), touchCounters);
     listAnimation();
   }
 
@@ -108,8 +180,6 @@ class CounterProvider with ChangeNotifier {
 
   void listAnimation() {
     if (scrollController.position.maxScrollExtent > 0.0) {
-      print(scrollController.position.maxScrollExtent);
-
       scrollController.animateTo(
         scrollController.position.maxScrollExtent + 110,
         curve: Curves.easeOut,
