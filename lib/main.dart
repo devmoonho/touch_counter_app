@@ -25,24 +25,24 @@ class TouchCounterApp extends StatelessWidget {
           body1: TextStyle(
               fontSize: 24.0,
               color: Colors.black54,
-              fontWeight: FontWeight.w600),
+              fontWeight: FontWeight.w500),
           body2: TextStyle(
               fontSize: 22.0,
               color: Colors.black54,
-              fontWeight: FontWeight.w600),
+              fontWeight: FontWeight.w500),
           display1: TextStyle(
               fontSize: 20.0,
               color: Colors.black45,
-              fontWeight: FontWeight.w600),
+              fontWeight: FontWeight.w500),
           display2: TextStyle(
             fontSize: 18,
             color: Colors.black45,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
           ),
           display3: TextStyle(
             fontSize: 16,
             color: Colors.black45,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),

@@ -127,7 +127,7 @@ class _ListWidgetState extends State<ListWidget>
                                 color: _getTypeColor(
                                     counterProvider.touchCounters[index].type),
                                 fontSize: 22.0,
-                                fontWeight: FontWeight.w800),
+                                fontWeight: FontWeight.w600,
                           )
                         ],
                       ),
