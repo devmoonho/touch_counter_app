@@ -62,7 +62,7 @@ class _CounterWidgetState extends State<CounterWidget>
                       return Dismissible(
                         key: Key(items[index]),
                         onDismissed: (direction) {
-                         counterProvider.removePreference(items[index]);
+                          counterProvider.removePreference(items[index]);
                         },
                         direction: DismissDirection.endToStart,
                         background: Card(
@@ -115,10 +115,11 @@ class _CounterWidgetState extends State<CounterWidget>
                                   style: Theme.of(context)
                                       .textTheme
                                       .display1
-                                      .apply(color: counterProvider.currentKey ==
-                                            items[index]
-                                        ? Colors.white
-                                        : Colors.orange),
+                                      .apply(
+                                          color: counterProvider.currentKey ==
+                                                  items[index]
+                                              ? Colors.white
+                                              : Colors.orange),
                                 )),
                               ),
                             )),
@@ -250,12 +251,12 @@ class _CounterWidgetState extends State<CounterWidget>
         );
       },
     ).whenComplete(() {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeRight,
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
+      // SystemChrome.setPreferredOrientations([
+      //   DeviceOrientation.landscapeRight,
+      //   DeviceOrientation.landscapeLeft,
+      //   DeviceOrientation.portraitUp,
+      //   DeviceOrientation.portraitDown,
+      // ]);
     });
   }
 
@@ -376,15 +377,13 @@ class _CounterWidgetState extends State<CounterWidget>
           setState(() {
             _selectedIndex = index;
             if (index == 0) {
-              SystemChrome.setPreferredOrientations([
-                DeviceOrientation.portraitUp,
-                DeviceOrientation.portraitDown
-              ]);
-              _saveCondition(counterProvider);
+              if (MediaQuery.of(context).orientation == Orientation.portrait)
+                _saveCondition(counterProvider);
             } else
-              counterProvider
-                  .getPreferenceKeys()
-                  .then((x) => _loadCondition(x, counterProvider, setState));
+              counterProvider.getPreferenceKeys().then((x) =>
+                  MediaQuery.of(context).orientation == Orientation.portrait
+                      ? _loadCondition(x, counterProvider, setState)
+                      : null);
           });
         },
         child: Container(

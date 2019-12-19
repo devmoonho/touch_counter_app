@@ -145,13 +145,13 @@ class _ListWidgetState extends State<ListWidget>
   Color _getTypeColor(String type) {
     switch (type) {
       case 'seconds':
-        return Colors.orange;
+        return Theme.of(context).primaryColor;
       case 'minutes':
         return Colors.lightGreen;
       case 'hours':
         return Colors.lightBlue;
       default:
-        return Colors.orange;
+        return Theme.of(context).primaryColor;
     }
   }
 
