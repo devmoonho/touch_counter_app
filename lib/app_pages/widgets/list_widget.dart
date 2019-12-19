@@ -33,7 +33,7 @@ class _ListWidgetState extends State<ListWidget>
 
   @override
   Widget build(BuildContext context) {
-    final counterProvider = Provider.of<CounterProvider>(context, listen: true);
+    final counterProvider = Provider.of<CounterProvider>(context, listen: false);
     return Padding(
       padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
       child: Container(

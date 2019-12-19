@@ -30,7 +30,7 @@ class _CounterWidgetState extends State<CounterWidget>
           contentPadding: EdgeInsets.only(top: 10.0),
           content: Container(
             width: double.maxFinite,
-            height: 320.0,
+            height: 400.0,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -99,14 +99,28 @@ class _CounterWidgetState extends State<CounterWidget>
                                 Navigator.of(context).pop();
                               });
                             },
-                            child: ListTile(
-                                title: Text(
-                              '${items[index]}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .display2
-                                  .apply(color: Colors.orange),
-                            ))),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: counterProvider.currentKey ==
+                                            items[index]
+                                        ? Colors.orange
+                                        : Colors.white),
+                                margin: const EdgeInsets.symmetric(vertical: 2),
+                                child: ListTile(
+                                    title: Text(
+                                  '${items[index]}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .display1
+                                      .apply(color: counterProvider.currentKey ==
+                                            items[index]
+                                        ? Colors.white
+                                        : Colors.orange),
+                                )),
+                              ),
+                            )),
                       );
                     },
                   ),
@@ -323,7 +337,7 @@ class _CounterWidgetState extends State<CounterWidget>
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Rubik',
-                            fontSize: 150,
+                            fontSize: 140,
                           ),
                           maxLines: 1,
                         ),

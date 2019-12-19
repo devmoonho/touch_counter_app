@@ -17,6 +17,7 @@ class CounterProvider with ChangeNotifier {
   bool vibration = false;
 
   String diffType = 'seconds';
+  String currentKey = '';
 
   AnimationController _animationController;
 
@@ -37,6 +38,9 @@ class CounterProvider with ChangeNotifier {
 
       value = ret.length;
       touchCounters = ret;
+      currentKey = await getCurrentKey();
+
+      initListPosition();
       refresh();
       return ret;
     }
@@ -51,6 +55,8 @@ class CounterProvider with ChangeNotifier {
 
     await setCurrentKey(key);
     value = touchCounters.length;
+
+    initListPosition();
     refresh();
     return touchCounters;
   }
@@ -62,9 +68,10 @@ class CounterProvider with ChangeNotifier {
     setCurrentKey(key);
   }
 
-  Future<void> setCurrentKey(String currentKey) async {
+  Future<void> setCurrentKey(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(CURRENT_KEY, currentKey);
+    await prefs.setString(CURRENT_KEY, key);
+    currentKey = key;
   }
 
   Future<String> getCurrentKey() async {
@@ -102,8 +109,6 @@ class CounterProvider with ChangeNotifier {
     counterFill.endYPos = end;
     counterFill.diffPos = (counterFill.endYPos - counterFill.startYPos) / 2;
     counterFill.diffPos = (counterFill.endYPos - counterFill.startYPos) / 2;
-    print(
-        'isCounterFill : $isCounterFill / start : ${counterFill.startYPos} / end : $end / upDown : ${counterFill.diffPos}');
     if ((isCounterFill && counterFill.diffPos > 0) ||
         (!isCounterFill && counterFill.diffPos < 0)) counterFill.diffPos = 0;
 
@@ -186,6 +191,14 @@ class CounterProvider with ChangeNotifier {
         duration: const Duration(milliseconds: 300),
       );
     }
+  }
+
+  void initListPosition() {
+    scrollController.animateTo(
+      110 * touchCounters.length.toDouble(),
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
   }
 
   void setController(AnimationController animationController) {
