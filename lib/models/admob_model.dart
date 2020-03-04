@@ -36,7 +36,7 @@ class AdmobCounter {
 
     myBanner = BannerAd(
       adUnitId: adUnitId,
-      size: AdSize.smartBanner,
+      size: AdSize.banner,
       targetingInfo: targetingInfo,
       listener: (MobileAdEvent event) {
       },

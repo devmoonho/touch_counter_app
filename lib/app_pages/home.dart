@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
                 duration: Duration(milliseconds: 300),
                 alignment: Alignment.topCenter,
                 height: counterProvider.isCounterFill
-                    ? MediaQuery.of(context).size.height +
+                    ? (MediaQuery.of(context).size.height  - 50)  +
                         counterProvider.counterFill.diffPos
                     : MediaQuery.of(context).size.height / 2 +
                         counterProvider.counterFill.diffPos,
@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
                 alignment: Alignment.bottomCenter,
                 height: counterProvider.isCounterFill
                     ? 0.0 - counterProvider.counterFill.diffPos
-                    : MediaQuery.of(context).size.height / 2 -
+                    : (MediaQuery.of(context).size.height  - 100) / 2 -
                         counterProvider.counterFill.diffPos,
                 child: ListWidget(),
               )

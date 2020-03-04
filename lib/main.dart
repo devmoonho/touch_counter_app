@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +16,7 @@ class TouchCounterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FirebaseAdMob.instance.initialize(appId: admobCounter.appId);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Touch Counter',
@@ -54,6 +57,26 @@ class TouchCounterApp extends StatelessWidget {
         ],
         child: Home(),
       ),
+      builder: (BuildContext context, Widget widget) {
+        final mediaQuery = MediaQuery.of(context);
+        return new Padding(
+          child: widget,
+          padding:
+              new EdgeInsets.only(bottom: getSmartBannerHeight(mediaQuery)),
+        );
+      },
     );
+  }
+
+  double getSmartBannerHeight(MediaQueryData mediaQuery) {
+    if (Platform.isAndroid) {
+      if (mediaQuery.size.height > 400) return 50.0;
+      return 35.0;
+    }
+    if (Platform.isIOS) {
+      if (mediaQuery.orientation == Orientation.portrait) return 50.0;
+      return 35.0;
+    }
+    return 50.0;
   }
 }
