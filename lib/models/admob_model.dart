@@ -3,12 +3,12 @@ import 'dart:io' show Platform;
 
 class AdmobCounter {
   static const String appId_android = "ca-app-pub-8126362785815437~5741192322";
-  static const String adUnitId_android =
-      "ca-app-pub-8126362785815437/6998433679";
+  static const String adUnitId_android = "ca-app-pub-8126362785815437/6998433679";
   static const String appId_Ios = "ca-app-pub-8126362785815437~8091328965";
   static const String adUnitId_Ios = "ca-app-pub-8126362785815437/7133809820";
   static const List<String> adTestDevices = [
     'c436c35d91946bdb614e712ae37a306e',
+    '1A18D049E53EC12E5B033AB23483F1C8'
   ];
 
   String appId;

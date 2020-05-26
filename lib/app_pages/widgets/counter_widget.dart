@@ -276,8 +276,8 @@ class _CounterWidgetState extends State<CounterWidget>
         Provider.of<CounterProvider>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(50.0),
-          bottomRight: Radius.circular(50.0)),
+          bottomLeft: Radius.circular(30.0),
+          bottomRight: Radius.circular(30.0)),
       child: Container(
         alignment: MediaQuery.of(context).orientation == Orientation.portrait
             ? Alignment.center

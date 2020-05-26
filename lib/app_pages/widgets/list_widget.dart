@@ -48,7 +48,7 @@ class _ListWidgetState extends State<ListWidget>
           itemCount: counterProvider.touchCounters.length,
           itemBuilder: (BuildContext context, int index) {
             TouchCounterModel tCounter = counterProvider.touchCounters[index];
-            return GestureDetector(
+            return InkWell(
               onTap: () {
                 _changeType(counterProvider, index);
                 tCounter.animatedValue = 20.0;

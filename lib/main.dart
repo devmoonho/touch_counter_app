@@ -59,7 +59,8 @@ class TouchCounterApp extends StatelessWidget {
       ),
       builder: (BuildContext context, Widget widget) {
         final mediaQuery = MediaQuery.of(context);
-        return new Padding(
+        return new Container(
+          color: Colors.white,
           child: widget,
           padding:
               new EdgeInsets.only(bottom: getSmartBannerHeight(mediaQuery)),
