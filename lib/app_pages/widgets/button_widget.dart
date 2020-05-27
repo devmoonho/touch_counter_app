@@ -43,7 +43,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
           child: Icon(
             _icons[index],
             size: 60.0,
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).backgroundColor,
           ),
         ),
       ),

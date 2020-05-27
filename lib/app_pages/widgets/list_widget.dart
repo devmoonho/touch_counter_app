@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:touch_counter_app/config/theme_config.dart';
 import 'package:touch_counter_app/models/touch_counter_model.dart';
 import 'package:touch_counter_app/providers/counter_provider.dart';
 
@@ -39,7 +40,7 @@ class _ListWidgetState extends State<ListWidget>
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Color(0xFFF6F6F6),
+          color: Colors.transparent
         ),
         child: ListView.builder(
           controller: counterProvider.scrollController,
@@ -96,7 +97,7 @@ class _ListWidgetState extends State<ListWidget>
                       children: <Widget>[
                         Text(
                           formatDate(tCounter.datetime, [HH, ':', nn, ':', ss]),
-                          style: TextStyle(fontSize: 24.0),
+                          style: TextStyle(fontSize: 24.0, color: Theme.of(context).primaryColor),
                         ),
                         SizedBox(
                           height: 5.0,
@@ -176,7 +177,7 @@ class _ListWidgetState extends State<ListWidget>
         break;
     }
     return Text('$txt',
-        style: TextStyle(fontSize: 26.0), overflow: TextOverflow.ellipsis);
+        style: TextStyle(fontSize: 26.0, color: Theme.of(context).canvasColor), overflow: TextOverflow.ellipsis,);
   }
 
   _changeType(CounterProvider counter, int index) {

@@ -5,10 +5,25 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:touch_counter_app/models/admob_model.dart';
 import 'package:touch_counter_app/providers/counter_provider.dart';
+import 'package:touch_counter_app/providers/theme_provider.dart';
 
 import 'app_pages/home.dart';
 
-void main() => runApp(TouchCounterApp());
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CounterProvider>.value(
+          value: CounterProvider(),
+        ),
+        ChangeNotifierProvider<ThemeProvider>.value(
+          value: ThemeProvider(),
+        ),
+      ],
+      child: TouchCounterApp(),
+    ),
+  );
+}
 
 AdmobCounter admobCounter = new AdmobCounter();
 
@@ -16,54 +31,24 @@ class TouchCounterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FirebaseAdMob.instance.initialize(appId: admobCounter.appId);
-
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Touch Counter',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Color(0xFFFFB339),
-        accentColor: Color(0xFFFFCC66),
-        textTheme: TextTheme(
-          body1: TextStyle(
-              fontSize: 24.0,
-              color: Colors.black54,
-              fontWeight: FontWeight.w500),
-          body2: TextStyle(
-              fontSize: 22.0,
-              color: Colors.black54,
-              fontWeight: FontWeight.w500),
-          display1: TextStyle(
-              fontSize: 20.0,
-              color: Colors.black45,
-              fontWeight: FontWeight.w500),
-          display2: TextStyle(
-            fontSize: 18,
-            color: Colors.black45,
-            fontWeight: FontWeight.w500,
-          ),
-          display3: TextStyle(
-            fontSize: 16,
-            color: Colors.black45,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<CounterProvider>.value(
-            value: CounterProvider(),
-          ),
-        ],
-        child: Home(),
-      ),
+      theme: themeProvider.getThemeData(),
+      home: Home(),
       builder: (BuildContext context, Widget widget) {
         final mediaQuery = MediaQuery.of(context);
-        return new Container(
-          color: Colors.white,
-          child: widget,
-          padding:
-              new EdgeInsets.only(bottom: getSmartBannerHeight(mediaQuery)),
+        return Column(
+          children: [
+            Expanded(
+              child: widget,
+            ),
+            SizedBox(
+              height: getSmartBannerHeight(mediaQuery),
+              child: Container(color: Colors.white),
+            )
+          ],
         );
       },
     );

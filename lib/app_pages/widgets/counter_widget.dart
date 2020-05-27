@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:touch_counter_app/providers/counter_provider.dart';
+import 'package:touch_counter_app/providers/theme_provider.dart';
 
 class CounterWidget extends StatefulWidget {
   @override
@@ -45,8 +46,8 @@ class _CounterWidgetState extends State<CounterWidget>
                       "OPEN COUNTER",
                       style: Theme.of(context)
                           .textTheme
-                          .body2
-                          .apply(color: Colors.orange),
+                          .headline6
+                          .apply(color: Theme.of(context).primaryColor),
                     ),
                   ],
                 ),
@@ -77,10 +78,11 @@ class _CounterWidgetState extends State<CounterWidget>
                                 ),
                                 Text(
                                   'Delete',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline6
+                                      .apply(
+                                          color: Theme.of(context).accentColor),
                                   textAlign: TextAlign.right,
                                 ),
                                 SizedBox(
@@ -106,20 +108,20 @@ class _CounterWidgetState extends State<CounterWidget>
                                 decoration: BoxDecoration(
                                     color: counterProvider.currentKey ==
                                             items[index]
-                                        ? Colors.orange
-                                        : Colors.white),
+                                        ? Theme.of(context).cardColor
+                                        : Theme.of(context).accentColor),
                                 margin: const EdgeInsets.symmetric(vertical: 2),
                                 child: ListTile(
                                     title: Text(
                                   '${items[index]}',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .display1
+                                      .headline6
                                       .apply(
                                           color: counterProvider.currentKey ==
                                                   items[index]
-                                              ? Colors.white
-                                              : Colors.orange),
+                                              ? Theme.of(context).accentColor
+                                              : Theme.of(context).cardColor),
                                 )),
                               ),
                             )),
@@ -131,14 +133,17 @@ class _CounterWidgetState extends State<CounterWidget>
                   child: Container(
                     padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(32.0),
                           bottomRight: Radius.circular(32.0)),
                     ),
                     child: Text(
                       "OK",
-                      style: TextStyle(color: Colors.white),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          .apply(color: Theme.of(context).backgroundColor),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -184,8 +189,8 @@ class _CounterWidgetState extends State<CounterWidget>
                       "SAVE COUNTER",
                       style: Theme.of(context)
                           .textTheme
-                          .body2
-                          .apply(color: Colors.orange),
+                          .headline6
+                          .apply(color: Theme.of(context).primaryColor),
                     ),
                   ],
                 ),
@@ -201,38 +206,49 @@ class _CounterWidgetState extends State<CounterWidget>
                     child: TextFormField(
                       controller: _controller,
                       autofocus: true,
-                      style: Theme.of(context).textTheme.display2,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          .apply(color: Theme.of(context).accentColor),
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(color: Colors.orange)),
-                        contentPadding: EdgeInsets.all(15.0),
+                            borderSide: BorderSide(
+                                color: Theme.of(context).accentColor)),
+                        contentPadding: EdgeInsets.only(left: 10, top: 40),
                         fillColor: Colors.red,
                         labelText: "Counter Name",
                         labelStyle: Theme.of(context)
                             .textTheme
-                            .display2
-                            .apply(color: Colors.orange),
+                            .headline5
+                            .apply(color: Theme.of(context).accentColor),
                         hintStyle: Theme.of(context)
                             .textTheme
-                            .display2
-                            .apply(color: Colors.grey),
+                            .subtitle1
+                            .apply(color: Theme.of(context).accentColor),
                       ),
                     ),
                   ),
+                ),
+                Divider(
+                  color: Colors.grey,
+                  height: 4.0,
                 ),
                 InkWell(
                   child: Container(
                     padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(32.0),
                           bottomRight: Radius.circular(32.0)),
                     ),
                     child: Text(
                       "SAVE",
-                      style: TextStyle(color: Colors.white),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          .apply(color: Theme.of(context).backgroundColor),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -250,14 +266,7 @@ class _CounterWidgetState extends State<CounterWidget>
           ),
         );
       },
-    ).whenComplete(() {
-      // SystemChrome.setPreferredOrientations([
-      //   DeviceOrientation.landscapeRight,
-      //   DeviceOrientation.landscapeLeft,
-      //   DeviceOrientation.portraitUp,
-      //   DeviceOrientation.portraitDown,
-      // ]);
-    });
+    ).whenComplete(() {});
   }
 
   String _currentTime() {
@@ -274,6 +283,9 @@ class _CounterWidgetState extends State<CounterWidget>
   Widget build(BuildContext context) {
     final counterProvider =
         Provider.of<CounterProvider>(context, listen: false);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    List<bool> _selections = List.generate(3, (index) => false);
+
     return ClipRRect(
       borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30.0),
@@ -314,7 +326,7 @@ class _CounterWidgetState extends State<CounterWidget>
                 setState(() => {});
               },
               child: Material(
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).cardColor,
                 child: InkWell(
                   onTap: () {
                     counterProvider.increment();
@@ -361,6 +373,32 @@ class _CounterWidgetState extends State<CounterWidget>
                       (MapEntry map) => _buildIcon(map.key, counterProvider),
                     )
                     .toList(),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(top: 40.0, left: 20.0),
+              child: ToggleButtons(
+                children: [
+                  Icon(
+                    Icons.brightness_7,
+                    color: Colors.orange,
+                  ),
+                  Icon(
+                    Icons.brightness_7,
+                    color: Colors.black,
+                  ),
+                  Icon(
+                    Icons.brightness_7,
+                    color: Colors.white,
+                  ),
+                ],
+                isSelected: _selections,
+                onPressed: (int index) {
+                  themeProvider.setThemeData = index;
+                  setState(() {
+                    _selections[index] = !_selections[index];
+                  });
+                },
               ),
             ),
           ],
