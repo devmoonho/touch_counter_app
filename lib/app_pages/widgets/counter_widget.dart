@@ -349,7 +349,7 @@ class _CounterWidgetState extends State<CounterWidget>
                         child: AutoSizeText(
                           '${counterProvider.value}',
                           style: TextStyle(
-                            color: Theme.of(context).primaryColorLight,
+                            color: Theme.of(context).indicatorColor,
                             fontFamily: 'Rubik',
                             fontSize: 140,
                           ),
