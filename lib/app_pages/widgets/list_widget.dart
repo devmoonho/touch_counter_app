@@ -110,7 +110,7 @@ class _ListWidgetState extends State<ListWidget>
                               tCounter.datetime, [yyyy, '-', mm, '-', dd]),
                           style: TextStyle(
                               fontSize: 16,
-                              color: Theme.of(context).indicatorColor),
+                              color: Theme.of(context).highlightColor),
                         ),
                       ],
                     ),
