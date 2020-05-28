@@ -108,8 +108,8 @@ class _CounterWidgetState extends State<CounterWidget>
                                 decoration: BoxDecoration(
                                     color: counterProvider.currentKey ==
                                             items[index]
-                                        ? Theme.of(context).cardColor
-                                        : Theme.of(context).accentColor),
+                                        ? Theme.of(context).primaryColor
+                                        : Theme.of(context).primaryColorLight),
                                 margin: const EdgeInsets.symmetric(vertical: 2),
                                 child: ListTile(
                                     title: Text(
@@ -120,8 +120,8 @@ class _CounterWidgetState extends State<CounterWidget>
                                       .apply(
                                           color: counterProvider.currentKey ==
                                                   items[index]
-                                              ? Theme.of(context).accentColor
-                                              : Theme.of(context).cardColor),
+                                              ? Theme.of(context).primaryColorLight
+                                              : Theme.of(context).primaryColor),
                                 )),
                               ),
                             )),
@@ -133,7 +133,7 @@ class _CounterWidgetState extends State<CounterWidget>
                   child: Container(
                     padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
+                      color: Theme.of(context).primaryColorDark,
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(32.0),
                           bottomRight: Radius.circular(32.0)),
@@ -209,7 +209,7 @@ class _CounterWidgetState extends State<CounterWidget>
                       style: Theme.of(context)
                           .textTheme
                           .headline6
-                          .apply(color: Theme.of(context).accentColor),
+                          .apply(color: Theme.of(context).highlightColor),
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -238,7 +238,7 @@ class _CounterWidgetState extends State<CounterWidget>
                   child: Container(
                     padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
+                      color: Theme.of(context).primaryColorDark,
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(32.0),
                           bottomRight: Radius.circular(32.0)),
@@ -248,7 +248,7 @@ class _CounterWidgetState extends State<CounterWidget>
                       style: Theme.of(context)
                           .textTheme
                           .headline6
-                          .apply(color: Theme.of(context).backgroundColor),
+                          .apply(color: Theme.of(context).primaryColorLight),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -326,7 +326,7 @@ class _CounterWidgetState extends State<CounterWidget>
                 setState(() => {});
               },
               child: Material(
-                color: Theme.of(context).cardColor,
+                color: Theme.of(context).secondaryHeaderColor,
                 child: InkWell(
                   onTap: () {
                     counterProvider.increment();
@@ -349,7 +349,7 @@ class _CounterWidgetState extends State<CounterWidget>
                         child: AutoSizeText(
                           '${counterProvider.value}',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Theme.of(context).primaryColorLight,
                             fontFamily: 'Rubik',
                             fontSize: 140,
                           ),

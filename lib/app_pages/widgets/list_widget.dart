@@ -34,14 +34,13 @@ class _ListWidgetState extends State<ListWidget>
 
   @override
   Widget build(BuildContext context) {
-    final counterProvider = Provider.of<CounterProvider>(context, listen: false);
+    final counterProvider =
+        Provider.of<CounterProvider>(context, listen: false);
     return Padding(
       padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
       child: Container(
         alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: Colors.transparent
-        ),
+        decoration: BoxDecoration(color: Colors.transparent),
         child: ListView.builder(
           controller: counterProvider.scrollController,
           reverse: true,
@@ -83,7 +82,9 @@ class _ListWidgetState extends State<ListWidget>
                       alignment: Alignment.center,
                       child: AutoSizeText(
                         tCounter.counter.toString(),
-                        style: TextStyle(fontSize: 26.0, color: Colors.orange),
+                        style: TextStyle(
+                            fontSize: 26.0,
+                            color: Theme.of(context).primaryColorDark),
                         maxLines: 1,
                       ),
                     ),
@@ -97,7 +98,9 @@ class _ListWidgetState extends State<ListWidget>
                       children: <Widget>[
                         Text(
                           formatDate(tCounter.datetime, [HH, ':', nn, ':', ss]),
-                          style: TextStyle(fontSize: 24.0, color: Theme.of(context).primaryColor),
+                          style: TextStyle(
+                              fontSize: 24.0,
+                              color: Theme.of(context).primaryColor),
                         ),
                         SizedBox(
                           height: 5.0,
@@ -105,7 +108,9 @@ class _ListWidgetState extends State<ListWidget>
                         Text(
                           formatDate(
                               tCounter.datetime, [yyyy, '-', mm, '-', dd]),
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Theme.of(context).indicatorColor),
                         ),
                       ],
                     ),
@@ -139,7 +144,6 @@ class _ListWidgetState extends State<ListWidget>
             );
           },
         ),
-        
       ),
     );
   }
@@ -176,8 +180,11 @@ class _ListWidgetState extends State<ListWidget>
             '${f.format(counter.touchCounters[index].diff.inMilliseconds / 1000)}';
         break;
     }
-    return Text('$txt',
-        style: TextStyle(fontSize: 26.0, color: Theme.of(context).canvasColor), overflow: TextOverflow.ellipsis,);
+    return Text(
+      '$txt',
+      style: TextStyle(fontSize: 26.0, color: Theme.of(context).highlightColor),
+      overflow: TextOverflow.ellipsis,
+    );
   }
 
   _changeType(CounterProvider counter, int index) {
