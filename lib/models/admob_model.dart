@@ -1,6 +1,8 @@
 import 'package:firebase_admob/firebase_admob.dart';
 import 'dart:io' show Platform;
 
+import 'package:touch_counter_app/config/app_config.dart';
+
 class AdmobCounter {
   static const String appId_android = "ca-app-pub-8126362785815437~5741192322";
   static const String adUnitId_android = "ca-app-pub-8126362785815437/6998433679";
@@ -44,6 +46,8 @@ class AdmobCounter {
   }
 
   void admobBannerShow() {
+    if(AppConfig.isAds == false) return;
+    
     if (myBanner == null) admobCounterInit();
     myBanner
       ..load()

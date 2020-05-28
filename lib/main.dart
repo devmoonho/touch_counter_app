@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:touch_counter_app/config/app_config.dart';
 import 'package:touch_counter_app/models/admob_model.dart';
 import 'package:touch_counter_app/providers/counter_provider.dart';
 import 'package:touch_counter_app/providers/theme_provider.dart';
@@ -45,7 +46,9 @@ class TouchCounterApp extends StatelessWidget {
               child: widget,
             ),
             SizedBox(
-              height: getSmartBannerHeight(mediaQuery),
+              height: AppConfig.isAds == false
+                  ? 0
+                  : getSmartBannerHeight(mediaQuery),
               child: Container(color: Colors.white),
             )
           ],
