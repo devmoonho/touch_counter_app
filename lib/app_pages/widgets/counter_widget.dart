@@ -12,22 +12,19 @@ class CounterWidget extends StatefulWidget {
   _CounterWidgetState createState() => _CounterWidgetState();
 }
 
-class _CounterWidgetState extends State<CounterWidget>
-    with SingleTickerProviderStateMixin {
+class _CounterWidgetState extends State<CounterWidget> with SingleTickerProviderStateMixin {
   int _selectedIndex = 0;
   List<IconData> _icons = [
     FontAwesomeIcons.penAlt,
     FontAwesomeIcons.folderOpen,
   ];
 
-  Future<void> _loadCondition(List<String> items,
-      CounterProvider counterProvider, StateSetter setState) async {
+  Future<void> _loadCondition(List<String> items, CounterProvider counterProvider, StateSetter setState) async {
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(32.0))),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32.0))),
           contentPadding: EdgeInsets.only(top: 10.0),
           content: Container(
             width: double.maxFinite,
@@ -44,10 +41,7 @@ class _CounterWidgetState extends State<CounterWidget>
                   children: <Widget>[
                     Text(
                       "OPEN COUNTER",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          .apply(color: Theme.of(context).primaryColor),
+                      style: Theme.of(context).textTheme.headline6.apply(color: Theme.of(context).primaryColor),
                     ),
                   ],
                 ),
@@ -78,11 +72,8 @@ class _CounterWidgetState extends State<CounterWidget>
                                 ),
                                 Text(
                                   'Delete',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline6
-                                      .apply(
-                                          color: Theme.of(context).accentColor),
+                                  style:
+                                      Theme.of(context).textTheme.headline6.apply(color: Theme.of(context).accentColor),
                                   textAlign: TextAlign.right,
                                 ),
                                 SizedBox(
@@ -95,9 +86,7 @@ class _CounterWidgetState extends State<CounterWidget>
                         ),
                         child: InkWell(
                             onTap: () {
-                              counterProvider
-                                  .getPreference(items[index])
-                                  .whenComplete(() {
+                              counterProvider.getPreference(items[index]).whenComplete(() {
                                 setState(() {});
                                 Navigator.of(context).pop();
                               });
@@ -106,22 +95,17 @@ class _CounterWidgetState extends State<CounterWidget>
                               padding: const EdgeInsets.all(2.0),
                               child: Container(
                                 decoration: BoxDecoration(
-                                    color: counterProvider.currentKey ==
-                                            items[index]
+                                    color: counterProvider.currentKey == items[index]
                                         ? Theme.of(context).primaryColor
                                         : Theme.of(context).primaryColorLight),
                                 margin: const EdgeInsets.symmetric(vertical: 2),
                                 child: ListTile(
                                     title: Text(
                                   '${items[index]}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline6
-                                      .apply(
-                                          color: counterProvider.currentKey ==
-                                                  items[index]
-                                              ? Theme.of(context).primaryColorLight
-                                              : Theme.of(context).primaryColor),
+                                  style: Theme.of(context).textTheme.headline6.apply(
+                                      color: counterProvider.currentKey == items[index]
+                                          ? Theme.of(context).primaryColorLight
+                                          : Theme.of(context).primaryColor),
                                 )),
                               ),
                             )),
@@ -134,16 +118,12 @@ class _CounterWidgetState extends State<CounterWidget>
                     padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                     decoration: BoxDecoration(
                       color: Theme.of(context).primaryColorDark,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(32.0),
-                          bottomRight: Radius.circular(32.0)),
+                      borderRadius:
+                          BorderRadius.only(bottomLeft: Radius.circular(32.0), bottomRight: Radius.circular(32.0)),
                     ),
                     child: Text(
                       "OK",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          .apply(color: Theme.of(context).backgroundColor),
+                      style: Theme.of(context).textTheme.headline6.apply(color: Theme.of(context).backgroundColor),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -162,15 +142,13 @@ class _CounterWidgetState extends State<CounterWidget>
   Future<String> _saveCondition(CounterProvider counterProvider) async {
     TextEditingController _controller;
     _controller = new TextEditingController(text: _currentTime());
-    _controller.selection =
-        TextSelection(baseOffset: 0, extentOffset: _controller.text.length);
+    _controller.selection = TextSelection(baseOffset: 0, extentOffset: _controller.text.length);
 
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(32.0))),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32.0))),
           contentPadding: EdgeInsets.only(top: 10.0),
           content: Container(
             width: double.maxFinite,
@@ -187,10 +165,7 @@ class _CounterWidgetState extends State<CounterWidget>
                   children: <Widget>[
                     Text(
                       "SAVE COUNTER",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          .apply(color: Theme.of(context).primaryColor),
+                      style: Theme.of(context).textTheme.headline6.apply(color: Theme.of(context).primaryColor),
                     ),
                   ],
                 ),
@@ -206,26 +181,16 @@ class _CounterWidgetState extends State<CounterWidget>
                     child: TextFormField(
                       controller: _controller,
                       autofocus: true,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          .apply(color: Theme.of(context).highlightColor),
+                      style: Theme.of(context).textTheme.headline6.apply(color: Theme.of(context).highlightColor),
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                                color: Theme.of(context).accentColor)),
+                            borderSide: BorderSide(color: Theme.of(context).accentColor)),
                         contentPadding: EdgeInsets.only(left: 10, top: 40),
                         fillColor: Colors.red,
                         labelText: "Counter Name",
-                        labelStyle: Theme.of(context)
-                            .textTheme
-                            .headline5
-                            .apply(color: Theme.of(context).accentColor),
-                        hintStyle: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            .apply(color: Theme.of(context).accentColor),
+                        labelStyle: Theme.of(context).textTheme.headline5.apply(color: Theme.of(context).accentColor),
+                        hintStyle: Theme.of(context).textTheme.subtitle1.apply(color: Theme.of(context).accentColor),
                       ),
                     ),
                   ),
@@ -239,24 +204,17 @@ class _CounterWidgetState extends State<CounterWidget>
                     padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                     decoration: BoxDecoration(
                       color: Theme.of(context).primaryColorDark,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(32.0),
-                          bottomRight: Radius.circular(32.0)),
+                      borderRadius:
+                          BorderRadius.only(bottomLeft: Radius.circular(32.0), bottomRight: Radius.circular(32.0)),
                     ),
                     child: Text(
                       "SAVE",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          .apply(color: Theme.of(context).primaryColorLight),
+                      style: Theme.of(context).textTheme.headline6.apply(color: Theme.of(context).primaryColorLight),
                       textAlign: TextAlign.center,
                     ),
                   ),
                   onTap: () {
-                    counterProvider
-                        .setPreference(
-                            _controller.text, counterProvider.touchCounters)
-                        .whenComplete(() {
+                    counterProvider.setPreference(_controller.text, counterProvider.touchCounters).whenComplete(() {
                       Navigator.of(context).pop();
                     });
                   },
@@ -270,8 +228,8 @@ class _CounterWidgetState extends State<CounterWidget>
   }
 
   String _currentTime() {
-    return formatDate(DateTime.now().toUtc().add(Duration(hours: 9)),
-        [yyyy, '/', mm, '/', dd, ' ', hh, ':', nn, ':', ss]);
+    return formatDate(
+        DateTime.now().toUtc().add(Duration(hours: 9)), [yyyy, '/', mm, '/', dd, ' ', hh, ':', nn, ':', ss]);
   }
 
   @override
@@ -281,19 +239,14 @@ class _CounterWidgetState extends State<CounterWidget>
 
   @override
   Widget build(BuildContext context) {
-    final counterProvider =
-        Provider.of<CounterProvider>(context, listen: false);
+    final counterProvider = Provider.of<CounterProvider>(context, listen: false);
     final themeProvider = Provider.of<ThemeProvider>(context);
     List<bool> _selections = List.generate(3, (index) => false);
 
     return ClipRRect(
-      borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30.0),
-          bottomRight: Radius.circular(30.0)),
+      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30.0), bottomRight: Radius.circular(30.0)),
       child: Container(
-        alignment: MediaQuery.of(context).orientation == Orientation.portrait
-            ? Alignment.center
-            : Alignment.topCenter,
+        alignment: MediaQuery.of(context).orientation == Orientation.portrait ? Alignment.center : Alignment.topCenter,
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
           boxShadow: [
@@ -317,7 +270,7 @@ class _CounterWidgetState extends State<CounterWidget>
                 setState(() => {});
               },
               onHorizontalDragEnd: (DragEndDetails details) {
-                if (counterProvider.StartYPos < counterProvider.EndYPos)
+                if (counterProvider.startYPos < counterProvider.endYPos)
                   counterProvider.gestureDown();
                 else
                   counterProvider.gestureUp();
@@ -337,13 +290,10 @@ class _CounterWidgetState extends State<CounterWidget>
                     constraints: BoxConstraints.expand(),
                     child: TextAnimation(
                       child: Container(
-                        padding: MediaQuery.of(context).orientation ==
-                                Orientation.portrait
+                        padding: MediaQuery.of(context).orientation == Orientation.portrait
                             ? EdgeInsets.only(top: 0.0, left: 20.0, right: 20.0)
-                            : EdgeInsets.only(
-                                top: 25.0, left: 150.0, right: 150.0),
-                        alignment: MediaQuery.of(context).orientation ==
-                                Orientation.portrait
+                            : EdgeInsets.only(top: 25.0, left: 150.0, right: 150.0),
+                        alignment: MediaQuery.of(context).orientation == Orientation.portrait
                             ? Alignment.center
                             : Alignment.topCenter,
                         child: AutoSizeText(
@@ -362,8 +312,7 @@ class _CounterWidgetState extends State<CounterWidget>
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
+              padding: const EdgeInsets.only(top: 30.0, left: 10.0, right: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: _icons
@@ -415,13 +364,11 @@ class _CounterWidgetState extends State<CounterWidget>
           setState(() {
             _selectedIndex = index;
             if (index == 0) {
-              if (MediaQuery.of(context).orientation == Orientation.portrait)
-                _saveCondition(counterProvider);
+              if (MediaQuery.of(context).orientation == Orientation.portrait) _saveCondition(counterProvider);
             } else
-              counterProvider.getPreferenceKeys().then((x) =>
-                  MediaQuery.of(context).orientation == Orientation.portrait
-                      ? _loadCondition(x, counterProvider, setState)
-                      : null);
+              counterProvider.getPreferenceKeys().then((x) => MediaQuery.of(context).orientation == Orientation.portrait
+                  ? _loadCondition(x, counterProvider, setState)
+                  : null);
           });
         },
         child: Container(
@@ -441,9 +388,7 @@ class _CounterWidgetState extends State<CounterWidget>
           child: Icon(
             _icons[index],
             size: 25.0,
-            color: _selectedIndex == index
-                ? Theme.of(context).primaryColor
-                : Color(0xFFB4C1C4),
+            color: _selectedIndex == index ? Theme.of(context).primaryColor : Color(0xFFB4C1C4),
           ),
         ),
       ),
@@ -460,17 +405,14 @@ class TextAnimation extends StatefulWidget {
   _TextAnimationState createState() => _TextAnimationState();
 }
 
-class _TextAnimationState extends State<TextAnimation>
-    with SingleTickerProviderStateMixin {
+class _TextAnimationState extends State<TextAnimation> with SingleTickerProviderStateMixin {
   Animation _animation;
   AnimationController _animationController;
 
   @override
   void initState() {
-    _animationController =
-        AnimationController(duration: Duration(milliseconds: 100), vsync: this);
-    _animation =
-        Tween<double>(begin: 1.0, end: 1.2).animate(_animationController);
+    _animationController = AnimationController(duration: Duration(milliseconds: 100), vsync: this);
+    _animation = Tween<double>(begin: 1.0, end: 1.2).animate(_animationController);
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _animationController.reverse();

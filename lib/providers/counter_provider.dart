@@ -28,13 +28,10 @@ class CounterProvider with ChangeNotifier {
     // prefs.clear();
     if (prefs.getStringList(await getCurrentKey())?.isEmpty ?? true) {
       setCurrentKey(DEFAULT_KEY);
-      return new List<TouchCounterModel>();
+      return <TouchCounterModel>[];
     } else {
-      List<TouchCounterModel> ret = new List<TouchCounterModel>();
-      ret = prefs
-          .getStringList(await getCurrentKey())
-          .map((x) => TouchCounterModel.fromMap(json.decode(x)))
-          .toList();
+      List<TouchCounterModel> ret = <TouchCounterModel>[];
+      ret = prefs.getStringList(await getCurrentKey()).map((x) => TouchCounterModel.fromMap(json.decode(x))).toList();
 
       value = ret.length;
       touchCounters = ret;
@@ -50,8 +47,7 @@ class CounterProvider with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     var jsonList = prefs.getStringList(key);
-    touchCounters =
-        jsonList.map((x) => TouchCounterModel.fromMap(json.decode(x))).toList();
+    touchCounters = jsonList.map((x) => TouchCounterModel.fromMap(json.decode(x))).toList();
 
     await setCurrentKey(key);
     value = touchCounters.length;
@@ -92,11 +88,11 @@ class CounterProvider with ChangeNotifier {
     prefs.remove(key);
   }
 
-  double get StartYPos {
+  double get startYPos {
     return counterFill.startYPos;
   }
 
-  double get EndYPos {
+  double get endYPos {
     return counterFill.endYPos;
   }
 
@@ -109,16 +105,14 @@ class CounterProvider with ChangeNotifier {
     counterFill.endYPos = end;
     counterFill.diffPos = (counterFill.endYPos - counterFill.startYPos) / 2;
     counterFill.diffPos = (counterFill.endYPos - counterFill.startYPos) / 2;
-    if ((isCounterFill && counterFill.diffPos > 0) ||
-        (!isCounterFill && counterFill.diffPos < 0)) counterFill.diffPos = 0;
+    if ((isCounterFill && counterFill.diffPos > 0) || (!isCounterFill && counterFill.diffPos < 0))
+      counterFill.diffPos = 0;
 
     refresh();
   }
 
   void gestureUp() {
-    if (counterFill.diffPos.abs() > 30 &&
-        isCounterFill &&
-        counterFill.diffPos < 0) {
+    if (counterFill.diffPos.abs() > 30 && isCounterFill && counterFill.diffPos < 0) {
       isCounterFill = false;
       counterFill.padding = EdgeInsets.only(top: 10.0);
       counterFill.alignment = Alignment.center;
@@ -128,9 +122,7 @@ class CounterProvider with ChangeNotifier {
   }
 
   void gestureDown() {
-    if (counterFill.diffPos.abs() > 30 &&
-        !isCounterFill &&
-        counterFill.diffPos > 0) {
+    if (counterFill.diffPos.abs() > 30 && !isCounterFill && counterFill.diffPos > 0) {
       isCounterFill = true;
       counterFill.padding = EdgeInsets.only(bottom: 100.0);
       counterFill.alignment = Alignment.bottomCenter;

@@ -15,11 +15,8 @@ class ThemeConfig {
       highlightColor: Colors.black54,
       accentColor: Colors.orange[200],
       canvasColor: Colors.white,
-      textSelectionHandleColor: Colors.black,
-      textSelectionColor: Colors.grey[500],
       brightness: Brightness.light,
-      floatingActionButtonTheme:
-          FloatingActionButtonThemeData(foregroundColor: Colors.white),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: Colors.white),
       dividerColor: Colors.white54,
     );
   }
@@ -37,9 +34,7 @@ class ThemeConfig {
       canvasColor: Colors.grey[800],
       brightness: Brightness.dark,
       backgroundColor: Colors.white,
-      textSelectionColor: Colors.grey[500],
-      floatingActionButtonTheme:
-          FloatingActionButtonThemeData(foregroundColor: Colors.black),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: Colors.black),
       dividerColor: Colors.black54,
     );
   }
@@ -55,13 +50,10 @@ class ThemeConfig {
       highlightColor: Colors.black54,
       accentColor: Colors.black87,
       canvasColor: Colors.grey[100],
-      
       dialogBackgroundColor: Colors.grey[100],
       brightness: Brightness.dark,
       backgroundColor: Colors.white,
-      textSelectionColor: Colors.grey[500],
-      floatingActionButtonTheme:
-          FloatingActionButtonThemeData(foregroundColor: Colors.white),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(foregroundColor: Colors.white),
       dividerColor: Colors.white54,
     );
   }
